@@ -32,23 +32,22 @@
 Desková hra Ubongo. Hráč má k dispozici zásobník různě tvarovaných dílků
 a hrací desku s překážkami (zdmi). Jeho úkolem je umístit všechny dílky na hrací
 plochu tak, aby využil všechny dílky a hrací plocha byla celá zaplněná, přičemž
-žádný dílek nesmí vyčnívat nebo překrývat jiný/překrývat zeď v co nejkratším čase.
+žádný dílek nesmí vyčnívat nebo překrývat jiný/překrývat zeď, v co nejkratším čase.
 
 Displej bude využit pro zobrazování hracího pole, zobrazení všech dostupných dílků
 pro danou mapu a jejich následný přesun na hrací plochu. Při vybírání dílků bude mít vybraný dílek
-okolo sebe zvýrazněnou hranici, aby šlo lépe určit, který dílek je zrovna zvolen.
-Dílky samy o sobě můžou klidně být barevné.
+okolo sebe zvýrazněnou hranici, aby šlo lépe určit, který dílek je právě zvolen.
+Dílky samy o sobě mohou klidně být barevné.
 
 Diody budou použit pro nápovědu. Program nejdříve určí správné tahy pro danou mapu
 a počtem rozsvícených diod může naznačovat, jestli je daný dílek správně natočený či ne.
 
-Výstup textu na displej se dá využít pro skóre. Vzorec mezi uplynutým časem a špatně zvolenými
-dílky. Plus nějaké menu jako *Nová hra* a *Konec*.
+Výstup textu na displej se dá využít pro skóre. Plus nějaké menu jako *Nová hra* a *Konec*.
 
 Pokud bude čas, tak přes SSH bychom mohli udělat volbu obtížnosti. To by se dalo považovat za 
 periférii raw terminal vstup. Obtížnost znamená velikost mapy, a tedy počet dílků k odehrání.
 
-== Použité periférie
+== Použité periférie 
 - RGB diody
 - LE displej
 - výstup textu na grafický displej
