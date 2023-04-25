@@ -25,6 +25,7 @@
 
 const char *map_phys_memdev="/dev/mem";
 
+//zavolat pouze jednou a mit to jako globalni promennou, kvuli fopen
 void *map_phys_address(off_t region_base, size_t region_size, int opt_cached)
 {
   unsigned long mem_window_size;
