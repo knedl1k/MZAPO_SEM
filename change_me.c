@@ -38,15 +38,11 @@ union rgb{
   };
 };
 
-void rgb1(union rgb color){
-  uint32_t *ptr=spiled_base+SPILED_REG_LED_RGB1_o;
-  printf("rgb:%x\n",color.d );
-  *ptr=color.d;
-}
-uint32_t knobs(void){
-  uint32_t *knobs=(spiled_base + SPILED_REG_KNOBS_8BIT_o);
-  return *knobs;
-}
+void rgb1(union rgb color);
+uint32_t knobs(void);
+void lcd_frame(void);
+void fbchar(char c,int x, int y, int scale);
+
 
 union pixel{
   uint16_t d; //data
@@ -59,6 +55,67 @@ union pixel{
 
 union pixel fb[480][320]; //frame buffer
 
+
+
+
+int main(int argc, char *argv[]){
+
+  /* Serialize execution of applications */
+
+  /* Try to acquire lock the first */
+  if (serialize_lock(1) <= 0) { //aby nam nekdo nevzal desku
+    printf("System is occupied\n");
+
+    if (1) {
+      printf("Waitting\n");
+      /* Wait till application holding lock releases it or exits */
+      serialize_lock(0);
+    }
+  }
+  parlcd_base=map_phys_address(PARLCD_REG_BASE_PHYS,PARLCD_REG_SIZE,0); //0=nechcem to cashovat  
+  assert(parlcd_base !=NULL);
+  parlcd_hx8357_init(parlcd_base);
+
+  for(int i=0;i<320;i++){
+    for(int j=0;j<480;j++){
+      fb[j][i].d=0xffff;
+    }
+  }
+
+
+  fbchar('a',0,0,6);
+
+  lcd_frame();
+
+  spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0); //0=nechcem to cashovat
+  assert(spiled_base!=NULL);
+
+  rgb1((union rgb){.g=255});
+
+  printf("Hello world\n");
+
+  while(1){
+    rgb1((union rgb){.d=knobs()});
+  }
+
+  sleep(4);
+
+  printf("Goodbye world\n");
+
+  /* Release the lock */
+  serialize_unlock();
+
+  return 0;
+}
+void rgb1(union rgb color){
+  uint32_t *ptr=spiled_base+SPILED_REG_LED_RGB1_o;
+  printf("rgb:%x\n",color.d );
+  *ptr=color.d;
+}
+uint32_t knobs(void){
+  uint32_t *knobs=(spiled_base + SPILED_REG_KNOBS_8BIT_o);
+  return *knobs;
+}
 void lcd_frame(void){
   parlcd_write_cmd(parlcd_base, 0x2c);
   for (int i = 0; i < 320 ; i++) {
@@ -89,55 +146,3 @@ void fbchar(char c,int x, int y, int scale){
 
 }
 
-
-int main(int argc, char *argv[])
-{
-
-  /* Serialize execution of applications */
-
-  /* Try to acquire lock the first */
-  if (serialize_lock(1) <= 0) { //aby nam nekdo nevzal desku
-    printf("System is occupied\n");
-
-    if (1) {
-      printf("Waitting\n");
-      /* Wait till application holding lock releases it or exits */
-      serialize_lock(0);
-    }
-  }
-  spiled_base=map_phys_address(PARLCD_REG_BASE_PHYS,PARLCD_REG_SIZE,0); //0=nechcem to cashovat  
-  assert(parlcd_base !=NULL);
-  parlcd_hx8357_init(parlcd_base);
-
-  for(int i=0;i<320;i++){
-    for(int j=0;j<480;j++){
-      fb[j][i].d=0xffff;
-    }
-  }
-
-
-  fbchar('a',0,0,6);
-
-
-  lcd_frame();
-
-  spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0); //0=nechcem to cashovat
-  assert(spiled_base!=NULL);
-
-  rgb1((union rgb){.g=255});
-
-  printf("Hello world\n");
-
-  while(1){
-    rgb1((union rgb){.d=knobs()});
-  }
-
-  sleep(4);
-
-  printf("Goodbye world\n");
-
-  /* Release the lock */
-  serialize_unlock();
-
-  return 0;
-}
