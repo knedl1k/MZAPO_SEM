@@ -10,9 +10,9 @@ LDLIBS += -lrt -lpthread
 #LDLIBS += -lm
 
 SOURCES = change_me.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c
-#SOURCES += font_prop14x16.c font_rom8x16.c
+SOURCES += font_prop14x16.c font_rom8x16.c
 TARGET_EXE = change_me
-#TARGET_IP ?= 192.168.202.127
+TARGET_IP ?= 192.168.223.202
 ifeq ($(TARGET_IP),)
 ifneq ($(filter debug run,$(MAKECMDGOALS)),)
 $(warning The target IP address is not set)
