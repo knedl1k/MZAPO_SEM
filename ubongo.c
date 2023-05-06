@@ -18,6 +18,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <assert.h>
+#include <string.h>
 
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
@@ -90,7 +91,7 @@ int main(int argc, char *argv[]){
   rgb1((union rgb){.g=255});
 
   printf("Hello world\n");
-  fontString("Hello World", 50, -200, 6);
+  fontString("Hello World", 0, -200, 3);
   fbchar('Z',40,-400,6);
   
   lcd_frame();
@@ -130,9 +131,8 @@ void lcd_frame(void){
 }
 /*prints inputted string starting from the coords with scaling*/
 void fontString(char *word, int x, int y, unsigned char scale){
-  size_t chars=0;
+  size_t chars=strlen(word); //gets the exact amount of chars to print
   int x_off=0, y_off=0;
-  while(word[chars]!='\0') chars++; //gets the exact amount of chars to print
   for(size_t i=0;i<chars;++i){
     printf("vypisuju %c\n",word[i]);
     fbchar(word[i],x+x_off,y+y_off,scale);
