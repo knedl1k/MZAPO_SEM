@@ -38,8 +38,8 @@ union rgb{
 void rgb1(union rgb color);
 uint32_t knobs(void);
 void lcd_frame(void);
-void fbchar(char c,unsigned short x, unsigned short y, unsigned char scale);
-void fontString(char *word, unsigned short x, unsigned short y, unsigned char scale);
+void fbchar(char c,int x, int y, unsigned char scale);
+void fontString(char *word, int x, int y, unsigned char scale);
 
 union pixel{
   uint16_t d; //data
@@ -81,8 +81,8 @@ int main(int argc, char *argv[]){
 
 
   fbchar('a',0,0,6);
-
-  lcd_frame();
+  fbchar('b',30,10,6);
+  lcd_frame(); //write to panel all changes from frame_buffer
 
   spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0); //0=nechcem to cashovat
   assert(spiled_base!=NULL);
@@ -90,11 +90,14 @@ int main(int argc, char *argv[]){
   rgb1((union rgb){.g=255});
 
   printf("Hello world\n");
-
+  fontString("Hello World", 50, -200, 6);
+  fbchar('Z',40,-400,6);
+  
+  lcd_frame();
   //while(1){
     //rgb1((union rgb){.d=knobs()});
   //}
-  printf("%d",font_rom8x16.maxwidth);
+  //printf("%d",font_rom8x16.maxwidth);
   sleep(4);
 
   printf("Goodbye world\n");
@@ -104,15 +107,19 @@ int main(int argc, char *argv[]){
 
   return 0;
 }
+
+/*sets RGB1 to specified color*/
 void rgb1(union rgb color){
   uint32_t *ptr=spiled_base+SPILED_REG_LED_RGB1_o;
   printf("rgb:%x\n",color.d );
   *ptr=color.d;
 }
+/*reteurns knobs value*/
 uint32_t knobs(void){
   uint32_t *knobs=(spiled_base + SPILED_REG_KNOBS_8BIT_o);
   return *knobs;
 }
+/*writes all cached changes in frame buffer to LCD*/
 void lcd_frame(void){
   parlcd_write_cmd(parlcd_base, 0x2c);
   for (unsigned short i = 0; i < 320; i++){
@@ -121,21 +128,22 @@ void lcd_frame(void){
     }
   }
 }
-
-void fontString(char *word, int x, int y, int scale){
+/*prints inputted string starting from the coords with scaling*/
+void fontString(char *word, int x, int y, unsigned char scale){
   size_t chars=0;
-  unsigned short x_off=0, y_off=0;
+  int x_off=0, y_off=0;
   while(word[chars]!='\0') chars++; //gets the exact amount of chars to print
-  for(size_t i=0;i<=chars;++i){
+  for(size_t i=0;i<chars;++i){
+    printf("vypisuju %c\n",word[i]);
     fbchar(word[i],x+x_off,y+y_off,scale);
-    x_off+= ;
-    y_off+= ;
+    x_off+= font_rom8x16.maxwidth*scale;
+    y_off+= 0;
   }
 }
 
 
 //This function draws a character 'c' onto a framebuffer 'fb' at position (x, y), with a scaling factor of 'scale'
-void fbchar(char c, int x, int y, int scale){
+void fbchar(char c, int x, int y, unsigned char scale){
   
   //Check if the character 'c' is within the range of characters defined by the font set 'font_rom8x16'
   if (c < font_rom8x16.firstchar || c >= (font_rom8x16.size + font_rom8x16.firstchar)){
@@ -168,5 +176,3 @@ void fbchar(char c, int x, int y, int scale){
     }
   }
 }
-
-
