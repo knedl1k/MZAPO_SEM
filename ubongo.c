@@ -25,10 +25,11 @@
 #include "mzapo_regs.h"
 #include "serialize_lock.h"
 #include "font_types.h"
+#include "parlcd_main.h"
 #include "text_display.h"
 
-void *spiled_base;
 
+void *spiled_base;
 
 union rgb{
   uint32_t d;
@@ -40,7 +41,7 @@ union rgb{
 void rgb1(union rgb color);
 uint32_t knobs(void);
 
-int main(int argc, char *argv[]){
+int main(void){
   /* Serialize execution of applications */
   if(serialize_lock(1) <= 0){ /* Try to acquire lock the first */
     printf("System is occupied\n");
@@ -52,10 +53,9 @@ int main(int argc, char *argv[]){
 
   prepare_lcd(); //starts up LCD and sets default background
   
-  //spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0); //0=nechcem to cashovat
-  //assert(spiled_base!=NULL);
-
-  //rgb1((union rgb){.b=255});
+  spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0); //0=nechcem to cashovat
+  assert(spiled_base!=NULL);
+  rgb1((union rgb){.b=255});
 
   printf("Hello world\n");
   fontString("World Hello", 0, -200, 1);

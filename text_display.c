@@ -4,33 +4,14 @@
 #include <string.h>
 #include <assert.h>
 
-
-#include "text_display.h"
-#include "font_types.h"
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
+#include "serialize_lock.h"
+#include "font_types.h"
+#include "parlcd_main.h"
+#include "text_display.h"
 
-/*initializes the LCD*/
-void prepare_lcd(void){
-  parlcd_base=map_phys_address(PARLCD_REG_BASE_PHYS,PARLCD_REG_SIZE,0); //0=nechcem to cashovat  
-  assert(parlcd_base !=NULL);
-  parlcd_hx8357_init(parlcd_base);
-  int background_color=0xffff;
-  for(unsigned short i=0;i<LCD_HEIGHT;i++)
-    for(unsigned short j=0;j<LCD_WIDTH;j++)
-      fb[j][i].d=background_color;
-  lcd_frame();
-}
-/*writes all cached changes in frame buffer to LCD*/
-void lcd_frame(void){
-  parlcd_write_cmd(parlcd_base, 0x2c);
-  for (unsigned short i=0; i<LCD_HEIGHT; i++)
-    for (unsigned short j=0; j<LCD_WIDTH; j++)
-      parlcd_write_data(parlcd_base, fb[j][i].d);
-
-  printf("zapisuju\n");
-}
 /*draws a character 'c' onto a framebuffer 'fb' at position (x, y), with a scaling factor*/
 void fbchar(char c, int x, int y, unsigned char scale){
   if(x<0 || x>=LCD_WIDTH || y>0 || y<-LCD_HEIGHT){
@@ -39,10 +20,9 @@ void fbchar(char c, int x, int y, unsigned char scale){
   }
   int char_color=0x0;
   //Check if the character 'c' is within the range of characters defined by the font set 'font_rom8x16'
-  if (c<font_rom8x16.firstchar || c >= (font_rom8x16.size+font_rom8x16.firstchar)){
+  if (c<font_rom8x16.firstchar || c >= (font_rom8x16.size+font_rom8x16.firstchar))
     //If the character is out of range, use the default character defined by the font set
     c=font_rom8x16.defaultchar;
-  }
   
   //Calculate the offset of the character 'c' from the first character in the font set, and get a pointer 'cb' to the bit representation of the character
   const int off=c-font_rom8x16.firstchar;
@@ -60,11 +40,11 @@ void fbchar(char c, int x, int y, unsigned char scale){
         int py=y+(i * scale);
         
         //Iterate over a square of size 'scale x scale' and set the color of each pixel to black (represented by the hexadecimal value '0x0')
-        for (unsigned short xi=0; xi<scale; xi++){
-          for (unsigned short xj=0; xj<scale; xj++){
+        for (unsigned short xi=0; xi<scale; xi++)
+          for (unsigned short xj=0; xj<scale; xj++)
             fb[px+xj][py+xi].d=char_color;
-          }
-        }
+          
+        
       }
     }
   }
