@@ -52,19 +52,25 @@ int main(void){
 
   prepare_lcd(); //starts up LCD and sets default background
   
-  spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0); //0=nechcem to cashovat
-  assert(spiled_base!=NULL);
-  rgb1((union rgb){.b=255});
-
+  /* LCD SECTION */
   printf("Hello world\n");
   fontString("World Hello", 0, -200, 1);
+  /*
+    if you want to write on LCD display, change colors of pixels in fb[LCD_WIDTH][LCD_HEIGHT].d
+    after that call lcd_frame(); which will write those changes onto the display
+    example of it is in text_display.c file.
+  */
+
+  
+  /* KNOBS SECTION */
+  //spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0); //0=nechcem to cashovat
+  //assert(spiled_base!=NULL);
+  //rgb1((union rgb){.b=255});
   //while(1){
     //rgb1((union rgb){.d=knobs()});
   //}
   //printf("%d",font_rom8x16.maxwidth);
 
-
-  
   sleep(4);
   printf("Goodbye world\n");
   serialize_unlock(); /* Release the lock */
