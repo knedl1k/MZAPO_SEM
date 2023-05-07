@@ -28,7 +28,6 @@
 #include "parlcd_main.h"
 #include "text_display.h"
 
-
 void *spiled_base;
 
 union rgb{

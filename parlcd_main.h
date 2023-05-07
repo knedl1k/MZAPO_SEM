@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 
-void *parlcd_base; 
+extern void *parlcd_base; 
 
 #define LCD_HEIGHT 320
 #define LCD_WIDTH 480
@@ -20,7 +20,7 @@ union pixel{
     int r:5;
   };
 }; 
-union pixel fb[LCD_WIDTH][LCD_HEIGHT]; //frame buffer
+extern union pixel fb[LCD_WIDTH][LCD_HEIGHT]; //frame buffer
 
 void prepare_lcd(void);
 void lcd_frame(void);
