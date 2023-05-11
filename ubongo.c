@@ -202,24 +202,6 @@ int main(int argc, char *argv[]){
   }
 
 
-    // MOJE 
-
-  int shapeMatrix[4][4] = {{1,1,0,0},{1,1,0,0},{1,0,1,0},{1,0,0,1}};
-  drawShape(shapeMatrix, 50, 100); 
-  /*
-  int shapeMatrix2[4][4] = {{1,1,1,1},{0,1,0,0},{0,0,0,0},{0,0,0,0}};
-  drawShape(shapeMatrix2, 200, 100);   
-*/
-  // print left rotated matrix 
-  int (*newMatrix)[4] = rotateRight(shapeMatrix); 
-  
-  
-  drawShape(newMatrix, 100, 100); 
-
-  
-
-    // ENDE 
-
   lcd_frame();
 
   spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0); //0=nechcem to cashovat
