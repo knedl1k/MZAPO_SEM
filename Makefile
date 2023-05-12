@@ -9,8 +9,9 @@ LDFLAGS += -static
 LDLIBS += -lrt -lpthread
 #LDLIBS += -lm
 
-SOURCES = ubongo.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c
-SOURCES += font_prop14x16.c font_rom8x16.c
+SOURCES =  ubongo.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c 
+SOURCES += font_prop14x16.c font_rom8x16.c parlcd_main.c text_display.c 
+SOURCES += parlcd_main_globals.c
 TARGET_EXE = ubongo
 TARGET_IP ?= 192.168.223.202
 ifeq ($(TARGET_IP),)
