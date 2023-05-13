@@ -1,3 +1,5 @@
+#include "text_display.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -5,12 +7,11 @@
 #include <assert.h>
 
 #include "mzapo_parlcd.h"
-#include "mzapo_phys.h"
-#include "mzapo_regs.h"
-#include "serialize_lock.h"
 #include "font_types.h"
 #include "parlcd_main.h"
-#include "text_display.h"
+#include "parlcd_main_globals.h"
+
+extern union pixel fb[LCD_WIDTH][LCD_HEIGHT]; //frame buffer
 
 /*draws a character 'c' onto a framebuffer 'fb' at position (x, y), with a scaling factor*/
 void fbchar(char c, int x, int y, unsigned char scale){
@@ -61,4 +62,3 @@ void fontString(char *word, int x, int y, unsigned char scale){
   }
   lcd_frame(); //write to panel all changes from frame_buffer
 }
-

@@ -1,3 +1,5 @@
+#include "parlcd_main.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdint.h>
@@ -7,13 +9,11 @@
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
-//#include "serialize_lock.h"
 #include "font_types.h"
-#include "parlcd_main.h"
-//#include "text_display.h"
+#include "parlcd_main_globals.h"
 
-
-
+union pixel fb[LCD_WIDTH][LCD_HEIGHT]; //frame buffer
+void *parlcd_base;
 
 /*initializes the LCD*/
 void prepare_lcd(void){

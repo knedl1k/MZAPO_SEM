@@ -25,17 +25,14 @@
 #include "mzapo_regs.h"
 #include "serialize_lock.h"
 #include "font_types.h"
+
 #include "parlcd_main.h"
 #include "text_display.h"
+#include "parlcd_main_globals.h"
+#include "drawing.h"
+#include "colors.h"
 
 void *spiled_base;
-
-union rgb{
-  uint32_t d;
-  struct{
-    uint8_t b,g,r;
-  };
-};
 
 void rgb1(union rgb color);
 uint32_t knobs(void);
@@ -55,6 +52,11 @@ int main(void){
   /* LCD SECTION */
   printf("Hello world\n");
   fontString("World Hello", 0, -200, 1);
+  drawSquare(-200, 200);
+  lcd_frame();
+  union rgb blue = {.r=0, .g=0, .b=255};
+  drawRectangle(blue,-100, 50, 200, 30);
+  lcd_frame();
   /*
     if you want to write on LCD display, change colors of pixels in fb[LCD_WIDTH][LCD_HEIGHT].d
     after that call lcd_frame(); which will write those changes onto the display
@@ -88,4 +90,3 @@ uint32_t knobs(void){
   uint32_t *knobs=(spiled_base+SPILED_REG_KNOBS_8BIT_o);
   return *knobs;
 }
-

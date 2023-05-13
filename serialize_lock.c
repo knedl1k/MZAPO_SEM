@@ -1,14 +1,13 @@
+#include "serialize_lock.h"
+
 #include <fcntl.h>
 #include <unistd.h>
 #include <errno.h>
 
-#include "serialize_lock.h"
-
 const char *serialize_lock_fname = "/run/lock/serialize_lock";
 int serialize_lock_fd = -1;
 
-int serialize_lock(int no_wait)
-{
+int serialize_lock(int no_wait){
   int fd;
 
   fd = open(serialize_lock_fname,
@@ -38,8 +37,7 @@ int serialize_lock(int no_wait)
   return 1;
 }
 
-void serialize_unlock(void)
-{
+void serialize_unlock(void){
   int fd = serialize_lock_fd;
 
   if (fd == -1)
