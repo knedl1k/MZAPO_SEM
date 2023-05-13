@@ -20,8 +20,8 @@ void color_pixel(union rgb color, int x, int y) {
   fb[y][x].b = color.b;
 }
 
-void drawRectangle(union rgb color, int x, int y, int width, int height){ 
-    // top and bottom edge 
+void drawRectangle(union rgb color, int x, int y, int height, int width){ 
+    // left and right edge 
     for (int i = x; i < x + width; i++){ 
       color_pixel(color, i, y); 
       color_pixel(color, i, y+1); 
@@ -36,8 +36,8 @@ void drawRectangle(union rgb color, int x, int y, int width, int height){
       color_pixel(color, i+4, y + height+4); 
 
     }
-    // left and right edge 
-    for (int i = y; i < y + height; i++){ 
+    // top and bottom edge 
+    for (int i = y; i < y + height + 5; i++){ 
       color_pixel(color, x, i); 
       color_pixel(color, x+1, i); 
       color_pixel(color, x+2, i); 
@@ -57,7 +57,8 @@ int edge = 40;
 
 void drawSquare(int x, int y){
   // edge = hrana čtverečků, ze kterých budou sestávat dílky, asi se nastavi defaultne 
-    // top and bottom edge 
+  
+    // left and right edge 
     for (int i = x; i < x + edge; i++){ 
       color_pixel(black, i, y); 
       color_pixel(black, i, y+1); 
@@ -65,15 +66,15 @@ void drawSquare(int x, int y){
       color_pixel(black, i, y+3); 
       color_pixel(black, i, y+4); 
 
-      color_pixel(black, i, y + edge); 
-      color_pixel(black, i, y + edge+1); 
-      color_pixel(black, i, y + edge+2); 
-      color_pixel(black, i, y + edge+3); 
-      color_pixel(black, i, y + edge+4); 
+      color_pixel(black, i+5, y + edge); 
+      color_pixel(black, i+5, y + edge+1); 
+      color_pixel(black, i+5, y + edge+2); 
+      color_pixel(black, i+5, y + edge+3); 
+      color_pixel(black, i+5, y + edge+4); 
 
     }
-    // left and right edge 
-    for (int i = y; i < y + edge; i++){ 
+    // top and bottom edge 
+    for (int i = y; i < y + edge + 5; i++){ 
       color_pixel(black, x, i); 
       color_pixel(black, x+1, i); 
       color_pixel(black, x+2, i); 
