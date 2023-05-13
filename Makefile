@@ -1,5 +1,6 @@
 CC = arm-none-linux-gnueabihf-gcc
 CXX = arm-linux-gnueabihf-g++
+CC:=ccache $(CC)
 
 CPPFLAGS = -I .
 CFLAGS =-g -std=gnu99 -O1 -Wall
@@ -9,8 +10,9 @@ LDFLAGS += -static
 LDLIBS += -lrt -lpthread
 #LDLIBS += -lm
 
-SOURCES = ubongo.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c
-SOURCES += font_prop14x16.c font_rom8x16.c
+SOURCES =  ubongo.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c 
+SOURCES += font_prop14x16.c font_rom8x16.c parlcd_main.c text_display.c 
+SOURCES += drawing.c
 TARGET_EXE = ubongo
 TARGET_IP ?= 192.168.223.202
 ifeq ($(TARGET_IP),)
