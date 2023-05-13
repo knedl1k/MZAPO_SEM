@@ -90,4 +90,3 @@ uint32_t knobs(void){
   uint32_t *knobs=(spiled_base+SPILED_REG_KNOBS_8BIT_o);
   return *knobs;
 }
-

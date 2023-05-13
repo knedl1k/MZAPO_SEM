@@ -62,4 +62,3 @@ void fontString(char *word, int x, int y, unsigned char scale){
   }
   lcd_frame(); //write to panel all changes from frame_buffer
 }
-
