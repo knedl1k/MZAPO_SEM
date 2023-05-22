@@ -16,7 +16,7 @@ extern union pixel fb[LCD_WIDTH][LCD_HEIGHT]; //frame buffer
 /*draws a character 'c' onto a framebuffer 'fb' at position (x, y), with a scaling factor*/
 void fbchar(char c, int x, int y, unsigned char scale){
   if(x<0 || x>=LCD_WIDTH || y>0 || y<-LCD_HEIGHT){
-    printf("ERROR: OUT OF LCD RANGE");
+    printf("ERROR: OUT OF LCD RANGE\n");
     return;
   }
   int char_color=0x0;

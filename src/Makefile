@@ -12,7 +12,7 @@ LDLIBS += -lrt -lpthread
 
 SOURCES =  ubongo.c mzapo_phys.c mzapo_parlcd.c serialize_lock.c 
 SOURCES += font_prop14x16.c font_rom8x16.c parlcd_main.c text_display.c 
-SOURCES += drawing.c
+SOURCES += drawing.c render_menu.c
 TARGET_EXE = ubongo
 TARGET_IP ?= 192.168.223.202
 ifeq ($(TARGET_IP),)

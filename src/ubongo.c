@@ -31,6 +31,7 @@
 #include "parlcd_main_globals.h"
 #include "drawing.h"
 #include "colors.h"
+#include "render_menu.h"
 
 void *spiled_base;
 
@@ -50,19 +51,24 @@ int main(void){
   prepare_lcd(); //starts up LCD and sets default background
   
   /* LCD SECTION */
-  printf("Hello world\n");
-  fontString("World Hello", 0, -200, 1);
-  drawSquare(-200, 200);
+  //printf("Hello world\n");
+  
+  //drawSquare(-200, 200);
   lcd_frame();
   union rgb blue = {.r=0, .g=0, .b=255};
-  drawRectangle(blue,-100, 50, 200, 30);
+  //drawRectangle(blue,50,-200,50,70);
   lcd_frame();
+  //drawRectangle(blue,-200, 150, 200, 30);
+  lcd_frame();
+  drawRectangleWithText("Play",200, -150, 100, 30);
+  lcd_frame();
+  //fontString("Volba 1",-200,200,2);
   /*
     if you want to write on LCD display, change colors of pixels in fb[LCD_WIDTH][LCD_HEIGHT].d
     after that call lcd_frame(); which will write those changes onto the display
     example of it is in text_display.c file.
   */
-
+  
   
   /* KNOBS SECTION */
   //spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0); //0=nechcem to cashovat

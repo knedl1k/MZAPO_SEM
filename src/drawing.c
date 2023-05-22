@@ -15,14 +15,14 @@ union rgb black = {.r = 0, .g = 0, .b = 0};
 union rgb blue = {.r=0, .g=0, .b=255};
 
 void color_pixel(union rgb color, int x, int y) {
-  fb[y][x].r = color.r;
-  fb[y][x].g = color.g;
-  fb[y][x].b = color.b;
+  fb[x][y].r = color.r;
+  fb[x][y].g = color.g;
+  fb[x][y].b = color.b;
 }
 
-void drawRectangle(union rgb color, int x, int y, int height, int width){ 
+void drawRectangle(union rgb color, int x, int y, int16_t height, uint16_t width){ 
     // left and right edge 
-    for (int i = x; i < x + width; i++){ 
+    for (size_t i = x; i < x + width; i++){ 
       color_pixel(color, i, y); 
       color_pixel(color, i, y+1); 
       color_pixel(color, i, y+2); 
@@ -37,7 +37,7 @@ void drawRectangle(union rgb color, int x, int y, int height, int width){
 
     }
     // top and bottom edge 
-    for (int i = y; i < y + height + 5; i++){ 
+    for (size_t i = y; i < y + height +5; i++){ 
       color_pixel(color, x, i); 
       color_pixel(color, x+1, i); 
       color_pixel(color, x+2, i); 
