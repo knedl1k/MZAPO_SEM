@@ -20,18 +20,12 @@
 #include <assert.h>
 #include <string.h>
 
-#include "mzapo_parlcd.h"
-#include "mzapo_phys.h"
-#include "mzapo_regs.h"
-#include "serialize_lock.h"
-#include "font_types.h"
-
-#include "parlcd_main.h"
+#include "perifs_handle.h"
+#include "menu_handle.h"
 #include "text_display.h"
-#include "parlcd_main_globals.h"
 #include "drawing.h"
+#include "serialize_lock.h"
 #include "colors.h"
-#include "render_menu.h"
 
 void *spiled_base;
 
@@ -50,18 +44,30 @@ int main(void){
 
   prepare_lcd(); //starts up LCD and sets default background
   
+  _Bool red=0;
+  _Bool green=0;
+  _Bool blue=0;
+
   /* LCD SECTION */
-  //printf("Hello world\n");
+  renderMenu();
+  int num;
+  scanf("%d",&num);
+  if(num==1) red=1;
+  else if(num==2) green=1;
+  else blue=1;
+  menuReaction(red,green,blue);
   
   //drawSquare(-200, 200);
   lcd_frame();
-  union rgb blue = {.r=0, .g=0, .b=255};
+  //union rgb blue = {.r=0, .g=0, .b=255};
   //drawRectangle(blue,50,-200,50,70);
-  lcd_frame();
+  //lcd_frame();
   //drawRectangle(blue,-200, 150, 200, 30);
-  lcd_frame();
-  drawRectangleWithText("Play",200, -150, 100, 30);
-  lcd_frame();
+  //lcd_frame();
+  //drawRectangleWithText("Play",200, -150,blue,2);
+  //lcd_frame();
+
+  
   //fontString("Volba 1",-200,200,2);
   /*
     if you want to write on LCD display, change colors of pixels in fb[LCD_WIDTH][LCD_HEIGHT].d

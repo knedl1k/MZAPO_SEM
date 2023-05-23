@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "parlcd_main_globals.h"
+#include "perifs_handle.h"
 #include "colors.h"
 
 union rgb color;
@@ -122,3 +122,4 @@ int (*rotateRight(int (*matrix)[4]))[4] {
     }
   return result;
 }
+

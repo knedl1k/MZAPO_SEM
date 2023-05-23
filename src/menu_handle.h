@@ -2,13 +2,14 @@
 #define RENDER_MENU_H
 
 #include <stdint.h>
+#include "colors.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-
-void drawRectangleWithText(char *str, int x, int y, int height, int width);
+uint8_t renderMenu(void);
+void menuReaction(_Bool red, _Bool green, _Bool blue);
 
 #ifdef __cplusplus
 } /* extern "C"*/

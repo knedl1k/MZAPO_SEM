@@ -5,9 +5,13 @@
 extern "C" {
 #endif
 
+#include "font_types.h"
+#include "colors.h"
+
 //#include "parlcd_main.h"
-void fbchar(char c,int x, int y, unsigned char scale);
-void fontString(char *word, int x, int y, unsigned char scale);
+void fbchar(char c,int x, int y, union rgb color, unsigned char scale);
+void fontString(char *word, int x, int y,union rgb color, unsigned char scale);
+void drawRectangleWithText(char *str, int x, int y, union rgb color,unsigned char scale);
 
 #ifdef __cplusplus
 } /* extern "C"*/

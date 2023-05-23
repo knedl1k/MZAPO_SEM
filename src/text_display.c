@@ -8,18 +8,21 @@
 
 #include "mzapo_parlcd.h"
 #include "font_types.h"
-#include "parlcd_main.h"
-#include "parlcd_main_globals.h"
+#include "perifs_handle.h"
+#include "drawing.h"
+#include "colors.h"
 
 extern union pixel fb[LCD_WIDTH][LCD_HEIGHT]; //frame buffer
 
+//union rgb BLACK={.r=255,.g=255,.b=255};
+
 /*draws a character 'c' onto a framebuffer 'fb' at position (x, y), with a scaling factor*/
-void fbchar(char c, int x, int y, unsigned char scale){
+void fbchar(char c, int x, int y, union rgb color,unsigned char scale){
   if(x<0 || x>=LCD_WIDTH || y>0 || y<-LCD_HEIGHT){
     printf("ERROR: OUT OF LCD RANGE\n");
     return;
   }
-  int char_color=0x0;
+  //int color=0xffff;
   //Check if the character 'c' is within the range of characters defined by the font set 'font_rom8x16'
   if (c<font_rom8x16.firstchar || c >= (font_rom8x16.size+font_rom8x16.firstchar))
     //If the character is out of range, use the default character defined by the font set
@@ -43,22 +46,37 @@ void fbchar(char c, int x, int y, unsigned char scale){
         //Iterate over a square of size 'scale x scale' and set the color of each pixel to black (represented by the hexadecimal value '0x0')
         for (unsigned short xi=0; xi<scale; xi++)
           for (unsigned short xj=0; xj<scale; xj++)
-            fb[px+xj][py+xi].d=char_color;
-          
+            //fb[px+xj][py+xi].d=color;
+            color_pixel(color,px+xj,py+xi);
         
       }
     }
   }
 }
 /*prints inputted string starting from the coords with scaling*/
-void fontString(char *word, int x, int y, unsigned char scale){
+void fontString(char *word, int x, int y,union rgb color, unsigned char scale){
   size_t chars=strlen(word); //gets the exact amount of chars to print
   int x_off=0, y_off=0;
   for(size_t i=0;i<chars;++i){
     printf("pisu pismeno %c\n",word[i]);
-    fbchar(word[i],x+x_off,y+y_off,scale);
+    fbchar(word[i],x+x_off,y+y_off,color,scale);
     x_off+= font_rom8x16.maxwidth*scale;
     y_off+= 0;
   }
   lcd_frame(); //write to panel all changes from frame_buffer
+}
+
+void drawRectangleWithText(char *str, int x, int y, union rgb color,unsigned char scale){
+  //union rgb color={.r = 0, .g = 0, .b = 255};
+  //int scale=2;
+  size_t cChars=strlen(str);
+  int x_off=x+10;
+  int y_off=y+3;
+  for(size_t i=0;i<cChars;++i){
+    fbchar(str[i],x_off,y_off,color,scale);
+    x_off+=font_rom8x16.maxwidth*scale;
+  }
+
+  drawRectangle(color,x,y,scale*font_rom8x16.height,scale*font_rom8x16.maxwidth*(cChars+1)); //
+  lcd_frame();
 }
