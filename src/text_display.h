@@ -10,7 +10,7 @@ extern "C" {
 
 //#include "parlcd_main.h"
 void fbchar(char c,int x, int y, union rgb color, unsigned char scale);
-void fontString(char *word, int x, int y,union rgb color, unsigned char scale);
+void printString(char *word, int x, int y,union rgb color, unsigned char scale);
 void drawRectangleWithText(char *str, int x, int y, union rgb color,unsigned char scale);
 
 #ifdef __cplusplus

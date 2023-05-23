@@ -54,7 +54,7 @@ void fbchar(char c, int x, int y, union rgb color,unsigned char scale){
   }
 }
 /*prints inputted string starting from the coords with scaling*/
-void fontString(char *word, int x, int y,union rgb color, unsigned char scale){
+void printString(char *word, int x, int y,union rgb color, unsigned char scale){
   size_t chars=strlen(word); //gets the exact amount of chars to print
   int x_off=0, y_off=0;
   for(size_t i=0;i<chars;++i){
