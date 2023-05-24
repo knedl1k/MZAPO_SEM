@@ -29,6 +29,14 @@ union pixel{
   };
 }; 
 
+extern _Bool is_r_pressed;
+extern _Bool is_g_pressed;
+extern _Bool is_b_pressed;
+extern uint8_t knob_data;
+extern uint8_t r_knob_data;
+extern uint8_t g_knob_data;
+extern uint8_t b_knob_data;
+
 /*LCD section*/
 void lcdInit(void);
 void lcdReset(void);
@@ -37,12 +45,7 @@ void lcdFrame(void);
 /*knob section*/
 void knobInit(void);
 uint32_t knobsVal(void);
-uint8_t redKnobVal(void);
-_Bool isRedPressed(void);
-uint8_t greenKnobVal(void);
-_Bool isGreenPressed(void);
-uint8_t blueKnobVal(void);
-_Bool isBluePressed(void);
+void updateKnobValues(void);
 
 /*RGB LED section*/
 void rgb1(union rgb color);

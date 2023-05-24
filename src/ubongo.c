@@ -53,11 +53,13 @@ int main(void){
   
   
   /* KNOBS SECTION */
-  fprintf(stderr,"red%hhd blue%hhd green%hhd\n",isRedPressed(),isGreenPressed(),isBluePressed());
+  fprintf(stderr,"red%hhd blue%hhd green%hhd\n",is_r_pressed,is_g_pressed,is_b_pressed);
   rgb1((union rgb){.b=255});
   sleep(4);
   while(1){
-    rgb1((union rgb){.d=blueKnobVal()});
+    updateKnobValues();
+    printf("r %x, g %x, b %x\n", r_knob_data,g_knob_data,b_knob_data);
+    //rgb1((union rgb){.d=r_knob_data});
     sleep(1);
   }
   

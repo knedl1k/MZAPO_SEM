@@ -5,6 +5,15 @@ union pixel fb[LCD_WIDTH][LCD_HEIGHT]; //frame buffer
 void *parlcd_base;
 void *spiled_base;
 
+_Bool is_r_pressed=0;
+_Bool is_g_pressed=0;
+_Bool is_b_pressed=0;
+uint8_t knob_data;
+uint8_t r_knob_data;
+uint8_t g_knob_data;
+uint8_t b_knob_data;
+
+
 void lcdInit(void){
   parlcd_base=map_phys_address(PARLCD_REG_BASE_PHYS,PARLCD_REG_SIZE,0); //0=nechcem to cashovat  
   assert(parlcd_base !=NULL);
@@ -33,6 +42,9 @@ void lcdFrame(void){
 void knobInit(void){
   spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0);
   assert(spiled_base!=NULL);
+  is_r_pressed=0;
+  is_g_pressed=0;
+  is_b_pressed=0;
 }
 
 
@@ -42,38 +54,28 @@ uint32_t knobsVal(void){
   return *knobs;
 }
 
-/*returns red knob value*/
-uint8_t redKnobVal(void){
-  uint32_t knobs_val=knobsVal();
-  uint32_t mask = ((1 << 8) - 1) << 17;
-  return knobs_val & mask;
-}
-_Bool isRedPressed(void){
-  uint32_t knobs_val=knobsVal();
-  uint32_t mask = ((1 << 1) - 1) << 26;
-  return knobs_val & mask;
-}
-/*returns green knob value*/
-uint8_t greenKnobVal(void){
-  uint32_t knobs_val=knobsVal();
-  uint32_t mask = ((1 << 8) - 1) << 9;
-  return knobs_val & mask;
-}
-_Bool isGreenPressed(void){
-  uint32_t knobs_val=knobsVal();
-  uint32_t mask = ((1 << 1) - 1) << 25;
-  return knobs_val & mask;
-}
-/*returns blue knob value*/
-uint8_t blueKnobVal(void){
-  uint32_t knobs_val=knobsVal();
-  uint32_t mask = ((1 << 8) - 1) << 0;
-  return knobs_val & mask;
-}
-_Bool isBluePressed(void){
-  uint32_t knobs_val=knobsVal();
-  uint32_t mask = ((1 << 1) - 1) << 24;
-  return knobs_val & mask;
+void updateKnobValues(void){
+  char red_knob_value = knob_data & 0b100;
+  char green_knob_value = knob_data & 0b010;
+  char blue_knob_value = knob_data & 0b001;
+
+  is_r_pressed = 0;
+  is_g_pressed = 0;
+  is_b_pressed = 0;
+
+  uint32_t knobs_value=knobsVal();
+
+  knob_data = (knobs_value) >> 24;
+  r_knob_data = (knobs_value >> 16) & 0xFF;
+  g_knob_data = (knobs_value >> 8) & 0xFF;
+  b_knob_data = (knobs_value) & 0xFF;
+
+  if (red_knob_value - (knob_data & 0b100) == 0b100)
+    is_r_pressed = 1;
+  if (green_knob_value - (knob_data & 0b010) == 0b010)
+    is_g_pressed = 1;
+  if (blue_knob_value - (knob_data & 0b001) == 0b001)
+    is_b_pressed = 1;
 }
 
 
