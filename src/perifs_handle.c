@@ -8,17 +8,22 @@ void *spiled_base;
 _Bool is_r_pressed=0;
 _Bool is_g_pressed=0;
 _Bool is_b_pressed=0;
+volatile uint32_t *knobs_status;
 uint8_t knob_data;
 uint8_t r_knob_data;
 uint8_t g_knob_data;
 uint8_t b_knob_data;
 
-
-void lcdInit(void){
+void initMemory(void){
   parlcd_base=map_phys_address(PARLCD_REG_BASE_PHYS,PARLCD_REG_SIZE,0); //0=nechcem to cashovat  
   assert(parlcd_base !=NULL);
-}
 
+  spiled_base=map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
+  assert(spiled_base!=NULL);
+}
+/* 
+* LCD section
+*/
 /*initializes/resets the LCD*/
 void lcdReset(void){
   parlcd_hx8357_init(parlcd_base);
@@ -39,21 +44,22 @@ void lcdFrame(void){
   fprintf(stderr,"refreshing LCD\n");
 }
 
+/*
+* knob section
+*/
 void knobInit(void){
-  spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0);
-  assert(spiled_base!=NULL);
+  knobs_status=(volatile uint32_t *)(spiled_base+SPILED_REG_KNOBS_8BIT_o);
   is_r_pressed=0;
   is_g_pressed=0;
   is_b_pressed=0;
 }
 
-
-/*returns knobs combined value*/
-uint32_t knobsVal(void){
-  uint32_t *knobs=(spiled_base+SPILED_REG_KNOBS_8BIT_o);
-  return *knobs;
+static uint32_t knobsVal(void){  
+    volatile uint32_t* knobs = (volatile uint32_t*)(spiled_base + SPILED_REG_KNOBS_8BIT_o);
+    return *knobs;
 }
 
+/*updates all data related to knobs*/
 void updateKnobValues(void){
   char red_knob_value = knob_data & 0b100;
   char green_knob_value = knob_data & 0b010;
@@ -62,13 +68,13 @@ void updateKnobValues(void){
   is_r_pressed = 0;
   is_g_pressed = 0;
   is_b_pressed = 0;
+  *knobs_status=knobsVal();
+  printf("vsechny:%x\n",*knobs_status);
 
-  uint32_t knobs_value=knobsVal();
-
-  knob_data = (knobs_value) >> 24;
-  r_knob_data = (knobs_value >> 16) & 0xFF;
-  g_knob_data = (knobs_value >> 8) & 0xFF;
-  b_knob_data = (knobs_value) & 0xFF;
+  knob_data = (*knobs_status) >> 24;
+  r_knob_data = (*knobs_status >> 16) & 0xFF;
+  g_knob_data = (*knobs_status >> 8) & 0xFF;
+  b_knob_data = (*knobs_status) & 0xFF;
 
   if (red_knob_value - (knob_data & 0b100) == 0b100)
     is_r_pressed = 1;
@@ -79,8 +85,9 @@ void updateKnobValues(void){
 }
 
 
-
-
+/*
+* RGB LED section
+*/
 /*sets RGB1 to specified color*/
 void rgb1(union rgb color){
   uint32_t *ptr=spiled_base+SPILED_REG_LED_RGB1_o;

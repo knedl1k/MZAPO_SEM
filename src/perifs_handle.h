@@ -37,14 +37,14 @@ extern uint8_t r_knob_data;
 extern uint8_t g_knob_data;
 extern uint8_t b_knob_data;
 
+void initMemory(void);
+
 /*LCD section*/
-void lcdInit(void);
 void lcdReset(void);
 void lcdFrame(void);
 
 /*knob section*/
 void knobInit(void);
-uint32_t knobsVal(void);
 void updateKnobValues(void);
 
 /*RGB LED section*/

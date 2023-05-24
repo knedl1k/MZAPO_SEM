@@ -42,8 +42,8 @@ int main(void){
     }
   }
 
-
-  lcdInit();
+  initMemory();
+  lcdReset();
   knobInit();
 
   /* LCD SECTION */
@@ -58,7 +58,7 @@ int main(void){
   sleep(4);
   while(1){
     updateKnobValues();
-    printf("r %x, g %x, b %x\n", r_knob_data,g_knob_data,b_knob_data);
+    printf("r %d, g %d, b %d\n", r_knob_data,g_knob_data,b_knob_data);
     //rgb1((union rgb){.d=r_knob_data});
     sleep(1);
   }
