@@ -11,6 +11,7 @@
 #include "mzapo_parlcd.h"
 #include "mzapo_phys.h"
 #include "mzapo_regs.h"
+#include "colors.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -28,9 +29,23 @@ union pixel{
   };
 }; 
 
-void prepare_lcd(void);
-void lcd_frame(void);
+/*LCD section*/
+void lcdInit(void);
+void lcdReset(void);
+void lcdFrame(void);
 
+/*knob section*/
+void knobInit(void);
+uint32_t knobsVal(void);
+uint8_t redKnobVal(void);
+_Bool isRedPressed(void);
+uint8_t greenKnobVal(void);
+_Bool isGreenPressed(void);
+uint8_t blueKnobVal(void);
+_Bool isBluePressed(void);
+
+/*RGB LED section*/
+void rgb1(union rgb color);
 
 #ifdef __cplusplus
 } /* extern "C"*/

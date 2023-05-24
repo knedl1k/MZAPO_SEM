@@ -27,7 +27,7 @@
 #include "serialize_lock.h"
 #include "colors.h"
 
-void *spiled_base;
+
 
 void rgb1(union rgb color);
 uint32_t knobs(void);
@@ -42,63 +42,29 @@ int main(void){
     }
   }
 
-  prepare_lcd(); //starts up LCD and sets default background
-  
-  _Bool red=0;
-  _Bool green=0;
-  _Bool blue=0;
+
+  lcdInit();
+  knobInit();
 
   /* LCD SECTION */
-  renderMenu();
-  int num;
-  scanf("%d",&num);
-  if(num==1) red=1;
-  else if(num==2) green=1;
-  else blue=1;
-  menuReaction(red,green,blue);
-  
-  //drawSquare(-200, 200);
-  lcd_frame();
-  //union rgb blue = {.r=0, .g=0, .b=255};
-  //drawRectangle(blue,50,-200,50,70);
-  //lcd_frame();
-  //drawRectangle(blue,-200, 150, 200, 30);
-  //lcd_frame();
-  //drawRectangleWithText("Play",200, -150,blue,2);
-  //lcd_frame();
 
-  
-  //fontString("Volba 1",-200,200,2);
-  /*
-    if you want to write on LCD display, change colors of pixels in fb[LCD_WIDTH][LCD_HEIGHT].d
-    after that call lcd_frame(); which will write those changes onto the display
-    example of it is in text_display.c file.
-  */
+  renderMenu();
+
   
   
   /* KNOBS SECTION */
-  //spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0); //0=nechcem to cashovat
-  //assert(spiled_base!=NULL);
-  //rgb1((union rgb){.b=255});
-  //while(1){
-    //rgb1((union rgb){.d=knobs()});
-  //}
-  //printf("%d",font_rom8x16.maxwidth);
-
+  fprintf(stderr,"red%hhd blue%hhd green%hhd\n",isRedPressed(),isGreenPressed(),isBluePressed());
+  rgb1((union rgb){.b=255});
+  sleep(4);
+  while(1){
+    rgb1((union rgb){.d=blueKnobVal()});
+    sleep(1);
+  }
+  
   sleep(4);
   printf("Goodbye world\n");
   serialize_unlock(); /* Release the lock */
   return 0;
 }
 
-/*sets RGB1 to specified color*/
-void rgb1(union rgb color){
-  uint32_t *ptr=spiled_base+SPILED_REG_LED_RGB1_o;
-  printf("rgb:%x\n",color.d );
-  *ptr=color.d;
-}
-/*reteurns knobs value*/
-uint32_t knobs(void){
-  uint32_t *knobs=(spiled_base+SPILED_REG_KNOBS_8BIT_o);
-  return *knobs;
-}
+

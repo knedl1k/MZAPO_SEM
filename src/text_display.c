@@ -17,7 +17,7 @@ extern union pixel fb[LCD_WIDTH][LCD_HEIGHT]; //frame buffer
 //union rgb BLACK={.r=255,.g=255,.b=255};
 
 /*draws a character 'c' onto a framebuffer 'fb' at position (x, y), with a scaling factor*/
-void fbchar(char c, int x, int y, union rgb color,unsigned char scale){
+void printChar(char c, int x, int y, union rgb color,unsigned char scale){
   if(x<0 || x>=LCD_WIDTH || y>0 || y<-LCD_HEIGHT){
     printf("ERROR: OUT OF LCD RANGE\n");
     return;
@@ -58,12 +58,11 @@ void printString(char *word, int x, int y,union rgb color, unsigned char scale){
   size_t chars=strlen(word); //gets the exact amount of chars to print
   int x_off=0, y_off=0;
   for(size_t i=0;i<chars;++i){
-    printf("pisu pismeno %c\n",word[i]);
-    fbchar(word[i],x+x_off,y+y_off,color,scale);
+    printChar(word[i],x+x_off,y+y_off,color,scale);
     x_off+= font_rom8x16.maxwidth*scale;
     y_off+= 0;
   }
-  lcd_frame(); //write to panel all changes from frame_buffer
+  lcdFrame(); //write to panel all changes from frame_buffer
 }
 
 void drawRectangleWithText(char *str, int x, int y, union rgb color,unsigned char scale){
@@ -73,10 +72,10 @@ void drawRectangleWithText(char *str, int x, int y, union rgb color,unsigned cha
   int x_off=x+10;
   int y_off=y+3;
   for(size_t i=0;i<cChars;++i){
-    fbchar(str[i],x_off,y_off,color,scale);
+    printChar(str[i],x_off,y_off,color,scale);
     x_off+=font_rom8x16.maxwidth*scale;
   }
 
   drawRectangle(color,x,y,scale*font_rom8x16.height,scale*font_rom8x16.maxwidth*(cChars+1)); //
-  lcd_frame();
+  lcdFrame();
 }

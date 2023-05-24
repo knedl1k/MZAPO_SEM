@@ -23,48 +23,48 @@ _Bool blue_pressed=0;
 
 
 uint8_t renderMenu(void){
-  prepare_lcd();
+  lcdReset();
   printString("APONGO",110,-300,WHITE,3);
   printString("Press the knob to select",20,-220,WHITE,2);
   drawRectangleWithText("Play",30,-150,RED,2);
   drawRectangleWithText("Settings",140,-150,GREEN,2);
   drawRectangleWithText("Quit",350,-150,BLUE,2);
-  lcd_frame();
+  lcdFrame();
   //wait for knob press
   return 0;
 }
 
 static uint8_t renderSettingsMenu(void){
-  prepare_lcd();
+  lcdReset();
   printString("APONGO",110,-300,WHITE,3);
   printString("Settings",20,-220,WHITE,2);
   drawRectangleWithText("Difficulty",30,-150,RED,2);
   drawRectangleWithText("Font",150,-150,GREEN,2);
   drawRectangleWithText("Back",350,-150,BLUE,2);
-  lcd_frame();
+  lcdFrame();
   //wait for knob press
   return 0;
 }
 
 static void renderDiffMenu(void){
-  prepare_lcd();
+  lcdReset();
   printString("APONGO",110,-300,WHITE,3);
   printString("Choose your difficulty",20,-220,WHITE,2);
   drawRectangleWithText("Potato",30,-150,RED,2);
   drawRectangleWithText("Nightmare",150,-150,GREEN,2);
   drawRectangleWithText("Hell",350,-150,BLUE,2);
-  lcd_frame();
+  lcdFrame();
   //wait for knob press
 }
 
 static uint8_t renderFontMenu(void){
-  prepare_lcd();
+  lcdReset();
   printString("APONGO",110,-300,WHITE,3);
   printString("Change font properties",20,-220,WHITE,2);
   drawRectangleWithText("Scaling",30,-150,RED,2);
   drawRectangleWithText("Type",150,-150,GREEN,2);
   drawRectangleWithText("Back",350,-150,BLUE,2);
-  lcd_frame();
+  lcdFrame();
   //wait for knob press
   return 0;
 }
@@ -72,7 +72,7 @@ static uint8_t renderFontMenu(void){
 void menuReaction(_Bool red, _Bool green, _Bool blue){
   //reacts on knob presses
   _Bool quit=0;
-  _Bool start=0;
+  //_Bool start=0;
   uint8_t reaction=renderMenu();
   while(! quit){
     switch(reaction){
