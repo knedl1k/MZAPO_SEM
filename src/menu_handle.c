@@ -12,7 +12,7 @@
 #include "font_types.h"
 
 union rgb RED = {.r=255, .g=0, .b=0};
-union rgb GREEN = {.r=0, .g=100, .b=0};
+union rgb GREEN = {.r=0, .g=255, .b=0};
 union rgb BLUE = {.r=0, .g=0, .b=255};
 union rgb WHITE={.r=255,.g=255,.b=255};
 union rgb BLACK={.r=0,.g=0,.b=0};
@@ -23,11 +23,11 @@ extern struct rotation_t knobs;
 void renderMenu(void){
   lcdReset();
   printString("APONGO",180,50,BLACK,3);
-  printString("Navigate using green knob",60,220,BLACK,2);
+  printString("Navigate using green knob",40,220,BLACK,2);
   drawRectangleWithText("Play",30,150,RED,2,0);
   drawRectangleWithText("Settings",160,150,GREEN,2,1);
   drawRectangleWithText("Quit",360,150,BLUE,2,0);
-  lcdFrame();
+  lcdRefresh();
 }
 
 static uint8_t renderSettingsMenu(void){
@@ -37,7 +37,7 @@ static uint8_t renderSettingsMenu(void){
   drawRectangleWithText("Difficulty",30,-150,RED,2,0);
   drawRectangleWithText("Font",150,-150,GREEN,2,0);
   drawRectangleWithText("Back",350,-150,BLUE,2,0);
-  lcdFrame();
+  lcdRefresh();
   //wait for knob press
   return 0;
 }
@@ -49,7 +49,7 @@ static void renderDiffMenu(void){
   drawRectangleWithText("Potato",30,-150,RED,2,0);
   drawRectangleWithText("Nightmare",150,-150,GREEN,2,0);
   drawRectangleWithText("Hell",350,-150,BLUE,2,0);
-  lcdFrame();
+  lcdRefresh();
   //wait for knob press
 }
 
@@ -60,7 +60,7 @@ static uint8_t renderFontMenu(void){
   drawRectangleWithText("Scaling",30,-150,RED,2,0);
   drawRectangleWithText("Type",150,-150,GREEN,2,0);
   drawRectangleWithText("Back",350,-150,BLUE,2,0);
-  lcdFrame();
+  lcdRefresh();
   //wait for knob press
   return 0;
 }

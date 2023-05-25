@@ -23,11 +23,11 @@ void lcdReset(void){
   for(unsigned short i=0;i<LCD_HEIGHT;++i)
     for(unsigned short j=0;j<LCD_WIDTH;++j)
       fb[j][i].d=background_color;
-  lcdFrame();
+  lcdRefresh();
 }
 
 /*writes all cached changes in frame buffer to LCD*/
-void lcdFrame(void){
+void lcdRefresh(void){
   parlcd_write_cmd(parlcd_base, 0x2c);
   for (unsigned short i=0; i<LCD_HEIGHT; ++i)
     for (unsigned short j=0; j<LCD_WIDTH; ++j)

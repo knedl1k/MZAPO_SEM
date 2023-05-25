@@ -53,7 +53,7 @@ void initMemory(void);
 
 /*LCD section*/
 void lcdReset(void);
-void lcdFrame(void);
+void lcdRefresh(void);
 
 /*knob section*/
 void knobInit(void);

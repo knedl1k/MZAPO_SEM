@@ -18,7 +18,6 @@ union rgb PRP={.r=255,.g=0,.b=255};
 
 /*draws a character 'c' onto a framebuffer 'fb' at position (x, y), with a scaling factor*/
 void printChar(char c, int x, int y, union rgb color,unsigned char scale){
-  printf("%d %d\n",x,y);
   if(x<0 || x>=LCD_WIDTH || y<0 || y>LCD_HEIGHT){
     fprintf(stderr,"ERROR: OUT OF LCD RANGE\n");
     return;
@@ -62,17 +61,17 @@ void printString(char *word, int x, int y,union rgb color, unsigned char scale){
     printChar(word[i],x+x_off,y+y_off,color,scale);
     x_off+= font_rom8x16.maxwidth*scale;
   }
-  lcdFrame(); //write to panel all changes from frame_buffer
+  lcdRefresh(); //write to panel all changes from frame_buffer
 }
 
 void drawRectangleWithText(char *str, int x, int y, union rgb color,unsigned char scale, _Bool selected){
   size_t cChars=strlen(str);
-  int x_off=x+10;
-  int y_off=-y+3;
-  printString(str,x+12,y+4,color,scale);
+  int x_off=x+12;
+  int y_off=y+4;
+  printString(str,x_off,y_off,color,scale);
 
   drawRectangle(color,y,x,scale*font_rom8x16.height,scale*font_rom8x16.maxwidth*(cChars+1)); //
   if(selected)
     drawRectangle(PRP,y-5,x-5,scale*font_rom8x16.height+10,scale*font_rom8x16.maxwidth*(cChars+1)+10);
-  lcdFrame();
+  lcdRefresh();
 }

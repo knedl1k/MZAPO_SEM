@@ -49,9 +49,9 @@ int main(void){
 
   //drawBoard1(40);
 
-  //drawBoard4(40); 
+  drawBoard4(40); 
 
-  lcdReset();
+  lcdRefresh();
 
   renderMenu();
   

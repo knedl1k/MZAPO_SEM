@@ -99,7 +99,6 @@ int edge = 40;
 
 void drawSquare(union rgb color, int x, int y){
   // edge = hrana čtverečků, ze kterých budou sestávat dílky, asi se nastavi defaultne 
-  
     // left and right edge 
     for (int i = x; i < x + edge; i++){ 
       color_pixel(color, i, y); 
