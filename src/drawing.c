@@ -62,7 +62,7 @@ void color_pixel_black_ver(int x, int y){
   fb[x+4][y].b = 0; 
 }
 
-void drawRectangle(union rgb color, int x, int y, int16_t height, uint16_t width){ 
+void drawRectangle(union rgb color, int x, int y, int width, int height){ 
     // left and right edge 
     for (size_t i = x; i < x + width; i++){ 
       color_pixel(color, i, y); 

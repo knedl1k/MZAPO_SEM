@@ -71,8 +71,8 @@ void drawRectangleWithText(char *str, int x, int y, union rgb color,unsigned cha
   int y_off=-y+3;
   printString(str,x+12,y+4,color,scale);
 
-  drawRectangle(color,y,x,scale*font_rom8x16.maxwidth*(cChars+1),scale*font_rom8x16.height); //
+  drawRectangle(color,y,x,scale*font_rom8x16.height,scale*font_rom8x16.maxwidth*(cChars+1)); //
   if(selected)
-    drawRectangle(YLW,y-5,x-5,scale*font_rom8x16.maxwidth*(cChars+1)+10,scale*font_rom8x16.height+10);
+    drawRectangle(YLW,y-5,x-5,scale*font_rom8x16.height+10,scale*font_rom8x16.maxwidth*(cChars+1)+10);
   lcdFrame();
 }
