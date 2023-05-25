@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "mzapo_regs.h": "c",
+        "colors.h": "c"
+    }
+}

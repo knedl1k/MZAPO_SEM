@@ -1,4 +1,4 @@
-CC = arm-none-linux-gnueabihf-gcc
+CC = arm-linux-gnueabihf-gcc
 CXX = arm-linux-gnueabihf-g++
 CC:=ccache $(CC)
 
