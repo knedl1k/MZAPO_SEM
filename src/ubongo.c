@@ -20,22 +20,16 @@
 #include <assert.h>
 #include <string.h>
 
-#include "mzapo_parlcd.h"
-#include "mzapo_phys.h"
-#include "mzapo_regs.h"
-#include "serialize_lock.h"
-#include "font_types.h"
-
-#include "parlcd_main.h"
+#include "perifs_handle.h"
+#include "menu_handle.h"
 #include "text_display.h"
-#include "parlcd_main_globals.h"
 #include "drawing.h"
+#include "serialize_lock.h"
 #include "colors.h"
 
-void *spiled_base;
+//union rgb WHITE={.r=255,.g=255,.b=255};
+struct rotation_t knobs;
 
-void rgb1(union rgb color);
-uint32_t knobs(void);
 
 int main(void){
   /* Serialize execution of applications */
@@ -47,50 +41,47 @@ int main(void){
     }
   }
 
-  prepare_lcd(); //starts up LCD and sets default background
-  
+  initMemory();
+  lcdReset();
+  knobInit();
+
   /* LCD SECTION */
-  printf("Hello world\n");
+  //printf("Hello world\n");
   //fontString("World Hello", 0, -200, 1);
   //drawSquare(-200, 200);
-  lcd_frame();
+  //lcd_frame();
   // union rgb blue = {.r=0, .g=0, .b=255};
   //drawRectangle(blue,-100, 50, 200, 30); 
   // drawBoard1(40);
 
-  drawBoard4(40); 
+  //drawBoard4(40); 
 
-  lcd_frame();
+  //lcd_frame();
   /*
     if you want to write on LCD display, change colors of pixels in fb[LCD_WIDTH][LCD_HEIGHT].d
     after that call lcd_frame(); which will write those changes onto the display
     example of it is in text_display.c file.
   */
 
+  renderMenu();
+  
   
   /* KNOBS SECTION */
-  //spiled_base=map_phys_address(SPILED_REG_BASE_PHYS,SPILED_REG_SIZE,0); //0=nechcem to cashovat
-  //assert(spiled_base!=NULL);
-  //rgb1((union rgb){.b=255});
-  //while(1){
-    //rgb1((union rgb){.d=knobs()});
-  //}
-  //printf("%d",font_rom8x16.maxwidth);
-
+  
+  fprintf(stderr,"red%hhd blue%hhd green%hhd\n",knobs.is_r_pressed,knobs.is_g_pressed,knobs.is_b_pressed);
+  rgb1((union rgb){.b=255});
+  sleep(4);
+  while(1){
+    knobs=updateKnobValues();
+    printf("r %d, g %d, b %d\n", knobs.r_knob_data,knobs.g_knob_data,knobs.b_knob_data);
+    //rgb1((union rgb){.d=r_knob_data});
+    sleep(1);
+  }
+  
   sleep(4);
   printf("Goodbye world\n");
   serialize_unlock(); /* Release the lock */
   return 0;
 }
 
-/*sets RGB1 to specified color*/
-void rgb1(union rgb color){
-  uint32_t *ptr=spiled_base+SPILED_REG_LED_RGB1_o;
-  printf("rgb:%x\n",color.d );
-  *ptr=color.d;
-}
-/*reteurns knobs value*/
-uint32_t knobs(void){
-  uint32_t *knobs=(spiled_base+SPILED_REG_KNOBS_8BIT_o);
-  return *knobs;
-}
+
