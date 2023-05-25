@@ -12,14 +12,15 @@
 #include "drawing.h"
 #include "colors.h"
 
-extern union pixel fb[LCD_WIDTH][LCD_HEIGHT]; //frame buffer
+union rgb YLW={.r=255,.g=255,.b=0};
 
 //union rgb BLACK={.r=255,.g=255,.b=255};
 
 /*draws a character 'c' onto a framebuffer 'fb' at position (x, y), with a scaling factor*/
 void printChar(char c, int x, int y, union rgb color,unsigned char scale){
-  if(x<0 || x>=LCD_WIDTH || y>0 || y<-LCD_HEIGHT){
-    printf("ERROR: OUT OF LCD RANGE\n");
+  printf("%d %d\n",x,y);
+  if(x<0 || x>=LCD_WIDTH || y<0 || y>LCD_HEIGHT){
+    fprintf(stderr,"ERROR: OUT OF LCD RANGE\n");
     return;
   }
   //int color=0xffff;
@@ -47,7 +48,7 @@ void printChar(char c, int x, int y, union rgb color,unsigned char scale){
         for (unsigned short xi=0; xi<scale; xi++)
           for (unsigned short xj=0; xj<scale; xj++)
             //fb[px+xj][py+xi].d=color;
-            color_pixel(color,px+xj,py+xi);
+            color_pixel(color,py+xi,px+xj);
         
       }
     }
@@ -60,22 +61,18 @@ void printString(char *word, int x, int y,union rgb color, unsigned char scale){
   for(size_t i=0;i<chars;++i){
     printChar(word[i],x+x_off,y+y_off,color,scale);
     x_off+= font_rom8x16.maxwidth*scale;
-    y_off+= 0;
   }
   lcdFrame(); //write to panel all changes from frame_buffer
 }
 
-void drawRectangleWithText(char *str, int x, int y, union rgb color,unsigned char scale){
-  //union rgb color={.r = 0, .g = 0, .b = 255};
-  //int scale=2;
+void drawRectangleWithText(char *str, int x, int y, union rgb color,unsigned char scale, _Bool selected){
   size_t cChars=strlen(str);
   int x_off=x+10;
-  int y_off=y+3;
-  for(size_t i=0;i<cChars;++i){
-    printChar(str[i],x_off,y_off,color,scale);
-    x_off+=font_rom8x16.maxwidth*scale;
-  }
+  int y_off=-y+3;
+  printString(str,x+12,y+4,color,scale);
 
-  drawRectangle(color,x,y,scale*font_rom8x16.height,scale*font_rom8x16.maxwidth*(cChars+1)); //
+  drawRectangle(color,y,x,scale*font_rom8x16.maxwidth*(cChars+1),scale*font_rom8x16.height); //
+  if(selected)
+    drawRectangle(YLW,y-5,x-5,scale*font_rom8x16.maxwidth*(cChars+1)+10,scale*font_rom8x16.height+10);
   lcdFrame();
 }

@@ -15,9 +15,14 @@ union rgb black = {.r = 0, .g = 0, .b = 0};
 union rgb blue = {.r=0, .g=0, .b=255};
 
 void color_pixel(union rgb color, int x, int y) {
-  fb[x][y].r = color.r;
-  fb[x][y].g = color.g;
-  fb[x][y].b = color.b;
+  /*printf("%d %d\n",x,y);
+  if(x<0 || x>=LCD_WIDTH || y<0 || y>=LCD_HEIGHT){
+    fprintf(stderr,"ERROR: CP OUT OF LCD RANGE\n");
+    return;
+  }*/
+  fb[y][x].r = color.r;
+  fb[y][x].g = color.g;
+  fb[y][x].b = color.b;
 }
 
 void drawRectangle(union rgb color, int x, int y, int16_t height, uint16_t width){ 

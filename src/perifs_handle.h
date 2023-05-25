@@ -29,13 +29,25 @@ union pixel{
   };
 }; 
 
-extern _Bool is_r_pressed;
-extern _Bool is_g_pressed;
-extern _Bool is_b_pressed;
-extern uint8_t knob_data;
-extern uint8_t r_knob_data;
-extern uint8_t g_knob_data;
-extern uint8_t b_knob_data;
+extern struct rotation_t{
+  _Bool is_r_pressed;
+  int8_t r_knob_data; //-1 backwards, 0 no change, +1 forward
+  _Bool is_g_pressed;
+  int8_t g_knob_data;
+  _Bool is_b_pressed;
+  int8_t b_knob_data;
+} rotation_t;
+
+typedef struct{
+  uint8_t r_cur; //red
+  uint8_t r_prev;
+  uint8_t g_cur; //green
+  uint8_t g_prev;
+  uint8_t b_cur; //blue
+  uint8_t b_prev;
+}knob_t;
+
+extern union pixel fb[LCD_WIDTH][LCD_HEIGHT]; //frame buffer
 
 void initMemory(void);
 
@@ -45,7 +57,7 @@ void lcdFrame(void);
 
 /*knob section*/
 void knobInit(void);
-void updateKnobValues(void);
+struct rotation_t updateKnobValues(void);
 
 /*RGB LED section*/
 void rgb1(union rgb color);

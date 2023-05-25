@@ -27,10 +27,9 @@
 #include "serialize_lock.h"
 #include "colors.h"
 
+//union rgb WHITE={.r=255,.g=255,.b=255};
+struct rotation_t knobs;
 
-
-void rgb1(union rgb color);
-uint32_t knobs(void);
 
 int main(void){
   /* Serialize execution of applications */
@@ -49,16 +48,16 @@ int main(void){
   /* LCD SECTION */
 
   renderMenu();
-
   
   
   /* KNOBS SECTION */
-  fprintf(stderr,"red%hhd blue%hhd green%hhd\n",is_r_pressed,is_g_pressed,is_b_pressed);
+  
+  fprintf(stderr,"red%hhd blue%hhd green%hhd\n",knobs.is_r_pressed,knobs.is_g_pressed,knobs.is_b_pressed);
   rgb1((union rgb){.b=255});
   sleep(4);
   while(1){
-    updateKnobValues();
-    printf("r %d, g %d, b %d\n", r_knob_data,g_knob_data,b_knob_data);
+    knobs=updateKnobValues();
+    printf("r %d, g %d, b %d\n", knobs.r_knob_data,knobs.g_knob_data,knobs.b_knob_data);
     //rgb1((union rgb){.d=r_knob_data});
     sleep(1);
   }
