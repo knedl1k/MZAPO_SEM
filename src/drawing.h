@@ -11,10 +11,22 @@ extern "C" {
 
 void color_pixel(union rgb color, int x, int y);
 void drawRectangle(union rgb color, int x, int y, int width, int height);
-void drawSquare(int x, int y);
+void drawSquare(union rgb color, int x, int y);
 void drawShape(int (*shapeMatrix)[4], int y, int x);
 int (*rotateLeft(int (*matrix)[4]))[4];
 int (*rotateRight(int (*matrix)[4]))[4];
+
+void color_pixel_black_hor(int x, int y); 
+void color_pixel_black_ver(int x, int y); 
+void drawShapeLARGE(int (*shapeMatrix)[6], int y, int x); 
+void drawBoard1(int edge); 
+void drawBoard2(int edge); 
+void drawBoard3(int edge); 
+void drawBoard4(int edge); 
+void drawBoard5(int edge); 
+void drawBoard6(int edge); 
+
+
 
 #ifdef __cplusplus
 } /* extern "C"*/

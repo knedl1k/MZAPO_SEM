@@ -51,11 +51,15 @@ int main(void){
   
   /* LCD SECTION */
   printf("Hello world\n");
-  fontString("World Hello", 0, -200, 1);
-  drawSquare(-200, 200);
+  //fontString("World Hello", 0, -200, 1);
+  //drawSquare(-200, 200);
   lcd_frame();
-  union rgb blue = {.r=0, .g=0, .b=255};
-  drawRectangle(blue,-100, 50, 200, 30);
+  // union rgb blue = {.r=0, .g=0, .b=255};
+  //drawRectangle(blue,-100, 50, 200, 30); 
+  // drawBoard1(40);
+
+  drawBoard4(40); 
+
   lcd_frame();
   /*
     if you want to write on LCD display, change colors of pixels in fb[LCD_WIDTH][LCD_HEIGHT].d
