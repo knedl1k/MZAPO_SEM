@@ -46,28 +46,18 @@ int main(void){
   knobInit();
 
   /* LCD SECTION */
-  //printf("Hello world\n");
-  //fontString("World Hello", 0, -200, 1);
-  //drawSquare(-200, 200);
-  //lcd_frame();
-  // union rgb blue = {.r=0, .g=0, .b=255};
-  //drawRectangle(blue,-100, 50, 200, 30); 
-  // drawBoard1(40);
+
+  //drawBoard1(40);
 
   //drawBoard4(40); 
 
-  //lcd_frame();
-  /*
-    if you want to write on LCD display, change colors of pixels in fb[LCD_WIDTH][LCD_HEIGHT].d
-    after that call lcd_frame(); which will write those changes onto the display
-    example of it is in text_display.c file.
-  */
+  lcdReset();
 
   renderMenu();
   
   
   /* KNOBS SECTION */
-  
+  /*
   fprintf(stderr,"red%hhd blue%hhd green%hhd\n",knobs.is_r_pressed,knobs.is_g_pressed,knobs.is_b_pressed);
   rgb1((union rgb){.b=255});
   sleep(4);
@@ -77,7 +67,7 @@ int main(void){
     //rgb1((union rgb){.d=r_knob_data});
     sleep(1);
   }
-  
+  */
   sleep(4);
   printf("Goodbye world\n");
   serialize_unlock(); /* Release the lock */

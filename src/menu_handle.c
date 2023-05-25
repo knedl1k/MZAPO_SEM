@@ -12,7 +12,7 @@
 #include "font_types.h"
 
 union rgb RED = {.r=255, .g=0, .b=0};
-union rgb GREEN = {.r=0, .g=255, .b=0};
+union rgb GREEN = {.r=0, .g=100, .b=0};
 union rgb BLUE = {.r=0, .g=0, .b=255};
 union rgb WHITE={.r=255,.g=255,.b=255};
 union rgb BLACK={.r=0,.g=0,.b=0};
@@ -22,8 +22,8 @@ extern struct rotation_t knobs;
 
 void renderMenu(void){
   lcdReset();
-  printString("APONGO",180,50,WHITE,3);
-  printString("Navigate using red knob",60,220,WHITE,2);
+  printString("APONGO",180,50,BLACK,3);
+  printString("Navigate using green knob",60,220,BLACK,2);
   drawRectangleWithText("Play",30,150,RED,2,0);
   drawRectangleWithText("Settings",160,150,GREEN,2,1);
   drawRectangleWithText("Quit",360,150,BLUE,2,0);
@@ -32,8 +32,8 @@ void renderMenu(void){
 
 static uint8_t renderSettingsMenu(void){
   lcdReset();
-  printString("APONGO",180,-300,WHITE,3);
-  printString("Settings",60,-220,WHITE,2);
+  printString("APONGO",180,-300,BLACK,3);
+  printString("Settings",60,-220,BLACK,2);
   drawRectangleWithText("Difficulty",30,-150,RED,2,0);
   drawRectangleWithText("Font",150,-150,GREEN,2,0);
   drawRectangleWithText("Back",350,-150,BLUE,2,0);
@@ -44,8 +44,8 @@ static uint8_t renderSettingsMenu(void){
 
 static void renderDiffMenu(void){
   lcdReset();
-  printString("APONGO",180,-300,WHITE,3);
-  printString("Choose your difficulty",60,-220,WHITE,2);
+  printString("APONGO",180,-300,BLACK,3);
+  printString("Choose your difficulty",60,-220,BLACK,2);
   drawRectangleWithText("Potato",30,-150,RED,2,0);
   drawRectangleWithText("Nightmare",150,-150,GREEN,2,0);
   drawRectangleWithText("Hell",350,-150,BLUE,2,0);
@@ -55,8 +55,8 @@ static void renderDiffMenu(void){
 
 static uint8_t renderFontMenu(void){
   lcdReset();
-  printString("APONGO",180,-300,WHITE,3);
-  printString("Change font properties",60,-220,WHITE,2);
+  printString("APONGO",180,-300,BLACK,3);
+  printString("Change font properties",60,-220,BLACK,2);
   drawRectangleWithText("Scaling",30,-150,RED,2,0);
   drawRectangleWithText("Type",150,-150,GREEN,2,0);
   drawRectangleWithText("Back",350,-150,BLUE,2,0);

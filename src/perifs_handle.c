@@ -19,7 +19,7 @@ void initMemory(void){
 /*initializes/resets the LCD*/
 void lcdReset(void){
   //parlcd_hx8357_init(parlcd_base);
-  int background_color=0x0000;
+  int background_color=0xFFFF;
   for(unsigned short i=0;i<LCD_HEIGHT;++i)
     for(unsigned short j=0;j<LCD_WIDTH;++j)
       fb[j][i].d=background_color;
