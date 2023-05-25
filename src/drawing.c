@@ -184,7 +184,7 @@ int SPy = 30 - t;
 // BOARD 1 
 void drawBoard1(int edge){ 
   int background[6][6] = {{1,1,1,0,0,0},{1,1,1,1,1,1},{0,0,1,1,1,1},{0,0,1,1,1,0},{0,0,0,0,0,0},{0,0,0,0,0,0}};
-  drawShapeLARGE(background, SPx, SPy); 
+  drawShapeLARGE(background, SPx + t, SPy + t); 
   for (int i = SPx; i < SPx + 3*edge + 3* t; i++){ // 1- 
     color_pixel_black_hor(i, SPy);   
   }
@@ -300,13 +300,13 @@ void drawBoard4(int edge){
   for (int i = SPy + 2 * edge; i <SPy + 3*edge + t; i++){ // 3| USED 
     color_pixel_black_ver(SPx + 3*edge + 2 * t, i); 
   } 
-  for (int i = SPy + 4 * edge + t; i < SPy + 5 * edge + 3*t; i++){ 
+  for (int i = SPy + 4 * edge + 2*t; i < SPy + 5 * edge + 3*t; i++){ 
     color_pixel_black_ver(SPx + 2 * edge, i);
   } 
   for ( int i = SPx + 2 * edge; i < SPx + 5 * edge + 3* t; i++){ 
     color_pixel_black_hor(i, SPy + 5 * edge + 2*t);
   } 
-  for (int i = SPx + 3*edge + t; i < SPx + 4 * edge + t; i++){ 
+  for (int i = SPx + 3*edge +2* t; i < SPx + 4 * edge + t; i++){ 
     color_pixel_black_hor(i,SPy + 3*edge);
   } 
   for (int i = SPy + 2 * edge; i <SPy + 3*edge; i++){ 
