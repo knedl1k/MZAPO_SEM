@@ -24,7 +24,7 @@ union rgb BLACK={.r=0,.g=0,.b=0};
 
 extern struct rotation_t knobs;
 
-void renderMenu(uint8_t selected){
+static void renderMenu(uint8_t selected){
   if(selected>MAX_OPTIONS) return;
   //lcdReset();
   printString("APONGO",180,50,BLACK,3);
@@ -76,18 +76,19 @@ void menuReaction(void){
   renderMenu(0);
   int8_t rendered=0;
   int8_t selected=0;
-  int8_t move;
-  int8_t prev_move;
+  int8_t move=0;
+  int8_t prev_move=0;
   
   
   while(! quit){
+
+    /* knob move response section */
     prev_move=move;
     knobs=updateKnobValues();
 
-
     move=knobs.g_knob_data*(-1); //!ON OUR BOARD
     printf("move %d\n",move);
-    if(prev_move!=move || move!=0){
+    if(move!=0 || prev_move!=move){
       selected+= move; 
       if(selected>MAX_OPTIONS)
         selected=MAX_OPTIONS;
@@ -109,11 +110,8 @@ void menuReaction(void){
           renderFontMenu(selected);
           break;
       }
-
     }
-    
-
-    //knobs=updateKnobValues();
+    /* knob press response section */
     _Bool pressed=knobs.is_g_pressed;
     printf("pressed%d\n",pressed);
     int8_t new_selected=0;
@@ -178,8 +176,8 @@ void menuReaction(void){
         switch(selected){
           case 0:
             //printString("Font options",100,220,BLACK,2);
-            //drawFullRowBox(BLACK,30,150);
-            //printString("Scaling level 1 set.",60,220,BLACK,2);
+            drawFullRowBox(WHITE,30,150);
+            printString("Scaling level 1 set.",60,220,BLACK,2);
             break;
           case 1:
             //set scaling of all text to 2
@@ -193,12 +191,10 @@ void menuReaction(void){
         }
       }
       selected=new_selected;
-    }
+    } //knob response section end
 
     
     sleep(0.5);
-  }
-  
-
-}
+  } //end while
+} //end of function
 

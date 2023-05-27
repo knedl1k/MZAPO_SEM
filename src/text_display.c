@@ -51,12 +51,13 @@ void printChar(char c, int x, int y, union rgb color,unsigned char scale){
         for (unsigned short xi=0; xi<scale; xi++)
           for (unsigned short xj=0; xj<scale; xj++)
             //fb[px+xj][py+xi].d=color;
-            color_pixel(color,py+xi,px+xj);
+            colorPixel(color,py+xi,px+xj);
         
       }
     }
   }
 }
+
 /*prints inputted string starting from the coords with scaling*/
 void printString(char *word, int x, int y,union rgb color, unsigned char scale){
   size_t chars=strlen(word); //gets the exact amount of chars to print
@@ -68,13 +69,13 @@ void printString(char *word, int x, int y,union rgb color, unsigned char scale){
   lcdRefresh(); //write to panel all changes from frame_buffer
 }
 
+/*dynamically prints text with rectangle around it*/
 void drawRectangleWithText(char *str, int x, int y, union rgb color,unsigned char scale, _Bool selected){
   size_t cChars=strlen(str);
   int x_off=x+10;
   int y_off=y+3;
   printString(str,x_off,y_off,color,scale);
-
-  drawRectangle(color,y,x,scale*font_rom8x16.height,scale*font_rom8x16.maxwidth*(cChars+1)); //
+  drawRectangle(color,y,x,scale*font_rom8x16.height,scale*font_rom8x16.maxwidth*(cChars+1)); 
   if(selected)
     drawRectangle(PRP,y-5,x-5,scale*font_rom8x16.height+10,scale*font_rom8x16.maxwidth*(cChars+1)+10);
   else

@@ -8,7 +8,6 @@
 extern "C" {
 #endif
 
-void renderMenu(uint8_t selected);
 void menuReaction(void);
 
 #ifdef __cplusplus
