@@ -33,7 +33,7 @@ void lcdFrame(void){
     for (unsigned short j=0; j<LCD_WIDTH; ++j)
       parlcd_write_data(parlcd_base, fb[j][i].d);
 
-  fprintf(stderr,"refreshing LCD\n");
+  //fprintf(stderr,"refreshing LCD\n");
 }
 
 /*
@@ -79,9 +79,9 @@ struct rotation_t updateKnobValues(void){
   knob.b_cur = (knobs_val >> 0) & 0xFF;
 
   //Clicks of knobs.
-  result.is_r_pressed = (knobs_val >> 16 & 0x1) == 1;
-  result.is_g_pressed = (knobs_val >> 8 & 0x1) == 1;
-  result.is_b_pressed = (knobs_val >> 0 & 0x1) == 1;
+  result.is_r_pressed = (knobs_val >> 26 & 0x1) == 1;
+  result.is_g_pressed = (knobs_val >> 25 & 0x1) == 1;
+  result.is_b_pressed = (knobs_val >> 24 & 0x1) == 1;
 
     //Red knob
   if ((knob.r_cur - 3) > knob.r_prev) {
@@ -145,7 +145,7 @@ struct rotation_t updateKnobValues(void){
   } else {
     result.b_knob_data = 0;
   }
-  printf("r %d g %d b %d\n",result.r_knob_data,result.g_knob_data,result.b_knob_data);
+  //printf("r %d g %d b %d\n",result.r_knob_data,result.g_knob_data,result.b_knob_data);
   return result;
 }
 

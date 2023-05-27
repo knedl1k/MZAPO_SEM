@@ -380,3 +380,11 @@ void drawBoard6(int edge){
     color_pixel_black_ver(SPx + edge, i);
   } 
 }
+
+void drawFullRowBox(union rgb color, int x, int y_end){
+  for (int i=x;i<LCD_WIDTH;++i){
+    for(int j=0;j<y_end;++j){
+      color_pixel(color,j,i);
+    }
+  }
+}

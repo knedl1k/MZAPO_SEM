@@ -12,7 +12,12 @@
 #include "drawing.h"
 #include "colors.h"
 
+<<<<<<< Updated upstream
 union rgb YLW={.r=255,.g=255,.b=0};
+=======
+union rgb PRP={.r=255,.g=0,.b=255};
+union rgb WHT={.r=255,.g=255,.b=255};
+>>>>>>> Stashed changes
 
 //union rgb BLACK={.r=255,.g=255,.b=255};
 
@@ -73,6 +78,13 @@ void drawRectangleWithText(char *str, int x, int y, union rgb color,unsigned cha
 
   drawRectangle(color,y,x,scale*font_rom8x16.maxwidth*(cChars+1),scale*font_rom8x16.height); //
   if(selected)
+<<<<<<< Updated upstream
     drawRectangle(YLW,y-5,x-5,scale*font_rom8x16.maxwidth*(cChars+1)+10,scale*font_rom8x16.height+10);
   lcdFrame();
+=======
+    drawRectangle(PRP,y-5,x-5,scale*font_rom8x16.height+10,scale*font_rom8x16.maxwidth*(cChars+1)+10);
+  else
+    drawRectangle(WHT,y-5,x-5,scale*font_rom8x16.height+10,scale*font_rom8x16.maxwidth*(cChars+1)+10);
+  lcdRefresh();
+>>>>>>> Stashed changes
 }

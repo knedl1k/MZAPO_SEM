@@ -44,6 +44,8 @@ int main(void){
   initMemory();
   lcdReset();
   knobInit();
+  //_Bool quit = 0;
+  menuReaction();
 
   /* LCD SECTION */
   //printf("Hello world\n");
@@ -56,24 +58,30 @@ int main(void){
 
   //drawBoard4(40); 
 
+<<<<<<< Updated upstream
   //lcd_frame();
   /*
     if you want to write on LCD display, change colors of pixels in fb[LCD_WIDTH][LCD_HEIGHT].d
     after that call lcd_frame(); which will write those changes onto the display
     example of it is in text_display.c file.
   */
+=======
+  //drawBoard4(40); 
 
-  renderMenu();
+  lcdRefresh();
+>>>>>>> Stashed changes
+
+  //renderMenu();
   
   
   /* KNOBS SECTION */
   
   fprintf(stderr,"red%hhd blue%hhd green%hhd\n",knobs.is_r_pressed,knobs.is_g_pressed,knobs.is_b_pressed);
-  rgb1((union rgb){.b=255});
+  rgb1((union rgb){.g=255});
   sleep(4);
   while(1){
     knobs=updateKnobValues();
-    printf("r %d, g %d, b %d\n", knobs.r_knob_data,knobs.g_knob_data,knobs.b_knob_data);
+    printf("r %d, g %d, b %d\n", knobs.is_r_pressed,knobs.is_g_pressed,knobs.is_b_pressed);
     //rgb1((union rgb){.d=r_knob_data});
     sleep(1);
   }
