@@ -26,6 +26,8 @@ void drawBoard4(int edge);
 void drawBoard5(int edge); 
 void drawBoard6(int edge); 
 
+void drawFullRowBox(union rgb color, int x, int y);
+
 
 
 #ifdef __cplusplus

@@ -215,7 +215,7 @@ void drawBoard1(int edge){
   for (int i = SPy + 3 * edge + 2 * t; i <SPy + 4 * edge + 3*t; i++){ // 4| 
     color_pixel_black_ver(SPx + 5 * edge + 2 * t, i);
   }
-  
+  lcdRefresh();
 }
 
 // BOARD 2 
@@ -245,7 +245,8 @@ void drawBoard2(int edge){
   } 
   for (int i = SPy + 2 * edge + t; i < SPy + 4 * edge + 3*t; i++){ // 4| 
     color_pixel_black_ver(SPx + 5 * edge + 2 * t, i);
-  }  
+  } 
+  lcdRefresh(); 
 }
 
 // BOARD 3 
@@ -276,6 +277,7 @@ void drawBoard3(int edge){
   for (int i = SPy + 2 * edge + t; i < SPy + 4 * edge + 3*t; i++){ // 4| 
     color_pixel_black_ver(SPx + 5 * edge + 2 * t, i);
   }  
+  lcdRefresh();
 }
 
 // BOARD 4 
@@ -318,6 +320,7 @@ void drawBoard4(int edge){
   for (int i = SPy + 2 * edge; i < SPy + 5*edge + 2 * t; i++){ 
     color_pixel_black_ver(SPx + 5 * edge+2*t, i); 
   }
+  lcdRefresh();
 }
 
 // BOARD 5
@@ -342,6 +345,7 @@ void drawBoard5(int edge){
   for (int i = SPy; i <SPy + 4*edge + 3*t; i++){ // 3| USED 
     color_pixel_black_ver(SPx + 4*edge + 2 * t, i); 
   } 
+  lcdRefresh();
 }
 
 // BOARD 6 
@@ -378,4 +382,5 @@ void drawBoard6(int edge){
     for (int i = SPy + 2* edge+2*t; i < SPy + 4*edge+ 2*t; i++){ //  
     color_pixel_black_ver(SPx + edge, i);
   } 
+  lcdRefresh();
 }
