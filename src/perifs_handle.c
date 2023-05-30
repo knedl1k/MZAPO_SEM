@@ -1,10 +1,12 @@
 #include "perifs_handle.h"
 
+#define THRESHOLD 128
+
 union pixel fb[LCD_WIDTH][LCD_HEIGHT]; //frame buffer
 
 void *parlcd_base;
 void *spiled_base;
-uint32_t last_rotation;
+uint32_t prev_rotate;
 
 void initMemory(void){
   parlcd_base=map_phys_address(PARLCD_REG_BASE_PHYS,PARLCD_REG_SIZE,0); //0=nechcem to cashovat  
@@ -61,59 +63,59 @@ static uint32_t knobsVal(void){
 }
 
 void knobInit(void){
-  last_rotation=0x0;
+  prev_rotate=0x0;
 }
 
 /*updates all data related to knobs*/
 struct rotation_t updateKnobValues(void){
   struct rotation_t output;
   defaultKnobs(&output);
-  knob_t knob; 
+  knob_t knobs; 
 
   uint32_t knobs_val=knobsVal();
 
   //Previous values of knobs.
-  knob.r_prev=(last_rotation >> 16) & 0xFF;
-  knob.g_prev=(last_rotation >> 8) & 0xFF;
-  knob.b_prev=(last_rotation >> 0) & 0xFF;
+  knobs.r_prev=(prev_rotate >> 16) & 0xFF;
+  knobs.g_prev=(prev_rotate >> 8) & 0xFF;
+  knobs.b_prev=(prev_rotate >> 0) & 0xFF;
 
   //Current values of knobs.
-  knob.r_cur=(knobs_val >> 16) & 0xFF;
-  knob.g_cur=(knobs_val >> 8) & 0xFF;
-  knob.b_cur=(knobs_val >> 0) & 0xFF;
+  knobs.r_cur=(knobs_val >> 16) & 0xFF;
+  knobs.g_cur=(knobs_val >> 8) & 0xFF;
+  knobs.b_cur=(knobs_val >> 0) & 0xFF;
 
   //Clicks of knobs.
   output.is_r_pressed=(knobs_val >> 26) & 0x1;
   output.is_g_pressed=(knobs_val >> 25) & 0x1;
   output.is_b_pressed=(knobs_val >> 24) & 0x1;
 
-  // Red knob
-  if(knob.r_cur > knob.r_prev){
-    output.r_knob_data=(knob.r_cur-knob.r_prev <= 128)? 1 : -1;
-    last_rotation +=(4 << 16) * output.r_knob_data;
-  }else if(knob.r_cur < knob.r_prev){
-    output.r_knob_data=(knob.r_prev-knob.r_cur <= 128)? -1 : 1;
-    last_rotation +=(4 << 16) * output.r_knob_data;
-  }else
+  //red knob
+  if(knobs.r_cur > knobs.r_prev){ //clockwise
+    output.r_knob_data=(knobs.r_cur-knobs.r_prev <= THRESHOLD)? 1 : -1;
+    prev_rotate +=(4 << 16) * output.r_knob_data;
+  }else if(knobs.r_cur < knobs.r_prev){ //counterclockwise
+    output.r_knob_data=(knobs.r_prev-knobs.r_cur <= THRESHOLD)? -1 : 1;
+    prev_rotate +=(4 << 16) * output.r_knob_data;
+  }else //no rotation
     output.r_knob_data=0;
 
-  // Green knob
-  if(knob.g_cur > knob.g_prev){
-    output.g_knob_data=(knob.g_cur-knob.g_prev <= 128)? 1 : -1;
-    last_rotation +=(4 << 8) * output.g_knob_data;
-  }else if(knob.g_cur < knob.g_prev){
-    output.g_knob_data=(knob.g_prev-knob.g_cur <= 128)? -1 : 1;
-    last_rotation +=(4 << 8) * output.g_knob_data;
+  //green knob
+  if(knobs.g_cur > knobs.g_prev){
+    output.g_knob_data=(knobs.g_cur-knobs.g_prev <= THRESHOLD)? 1 : -1;
+    prev_rotate +=(4 << 8) * output.g_knob_data;
+  }else if(knobs.g_cur < knobs.g_prev){
+    output.g_knob_data=(knobs.g_prev-knobs.g_cur <= THRESHOLD)? -1 : 1;
+    prev_rotate +=(4 << 8) * output.g_knob_data;
   }else
     output.g_knob_data=0;
 
-  // Blue knob
-  if(knob.b_cur > knob.b_prev){
-    output.b_knob_data=(knob.b_cur-knob.b_prev <= 128)? 1 : -1;
-    last_rotation +=(4 << 0) * output.b_knob_data;
-  }else if(knob.b_cur < knob.b_prev){
-    output.b_knob_data=(knob.b_prev-knob.b_cur <= 128)? -1 : 1;
-    last_rotation +=(4 << 0) * output.b_knob_data;
+  //blue knob
+  if(knobs.b_cur > knobs.b_prev){
+    output.b_knob_data=(knobs.b_cur-knobs.b_prev <= THRESHOLD)? 1 : -1;
+    prev_rotate +=(4 << 0) * output.b_knob_data;
+  }else if(knobs.b_cur < knobs.b_prev){
+    output.b_knob_data=(knobs.b_prev-knobs.b_cur <= THRESHOLD)? -1 : 1;
+    prev_rotate +=(4 << 0) * output.b_knob_data;
   }else
     output.b_knob_data=0;
 
