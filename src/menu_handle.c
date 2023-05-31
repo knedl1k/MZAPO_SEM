@@ -12,6 +12,7 @@
 #include "text_display.h"
 #include "colors.h"
 #include "font_types.h"
+#include "game_handle.h"
 
 union rgb RED = {.r=255, .g=0, .b=0};
 union rgb GREEN = {.r=0, .g=255, .b=0};
@@ -136,10 +137,7 @@ void menuReaction(void){
         switch(selected){
           case 0:
             //start the game
-            lcdReset(0xFFFF);
-            drawBoard1(33); //!EXAMPLE  
-            manageStack(4,1,1,1);
-            sleep(10);
+            gameReaction();
             //quit=1;
             break;
           case 1:

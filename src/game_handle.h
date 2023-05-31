@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-
+void gameReaction(void);
 
 
 #ifdef __cplusplus

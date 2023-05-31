@@ -180,7 +180,7 @@ int SPx=20-t;  // starting point x
 int SPy=30-t;
 
 // BOARD 1
-void drawBoard1(int edge){
+void drawBoard1(void){
   int background[6][6]={{1, 1, 1, 0, 0, 0},{1, 1, 1, 1, 1, 1},{0, 0, 1, 1, 1, 1},
                          {0, 0, 1, 1, 1, 0},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
@@ -218,7 +218,7 @@ void drawBoard1(int edge){
 }
 
 // BOARD 2
-void drawBoard2(int edge){
+void drawBoard2(void){
   int background[6][6]={{0, 1, 1, 0, 0, 0},{1, 1, 1, 0, 0, 0},{1, 1, 1, 1, 1, 0},
                          {1, 1, 1, 1, 1, 0},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
@@ -250,7 +250,7 @@ void drawBoard2(int edge){
 }
 
 // BOARD 3
-void drawBoard3(int edge){
+void drawBoard3(void){
   int background[6][6]={{0, 1, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},{1, 1, 1, 1, 1, 0},
                          {1, 1, 1, 1, 1, 0},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
@@ -282,7 +282,7 @@ void drawBoard3(int edge){
 }
 
 // BOARD 4
-void drawBoard4(int edge){
+void drawBoard4(void){
   int background[6][6]={{1, 1, 0, 0, 0, 0},{1, 1, 0, 0, 0, 0},{1, 1, 1, 0, 1, 0},
                          {1, 1, 1, 1, 1, 0},{0, 0, 1, 1, 1, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
@@ -326,7 +326,7 @@ void drawBoard4(int edge){
 }
 
 // BOARD 5
-void drawBoard5(int edge){
+void drawBoard5(void){
   int background[6][6]={{0, 0, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},
                          {1, 1, 1, 1, 0, 0},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
@@ -352,7 +352,7 @@ void drawBoard5(int edge){
 }
 
 // BOARD 6
-void drawBoard6(int edge){
+void drawBoard6(void){
   int background[6][6]={{0, 1, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},{0, 1, 1, 1, 1, 1},
                          {0, 1, 1, 1, 1, 1},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);

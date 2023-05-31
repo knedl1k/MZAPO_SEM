@@ -19,12 +19,12 @@ int (*rotateRight(int (*matrix)[4]))[4];
 void colorPixelBlackHor(int x, int y); 
 void colorPixelBlackVer(int x, int y); 
 void drawShapeLARGE(int (*shapeMatrix)[6], int y, int x); 
-void drawBoard1(int edge); 
-void drawBoard2(int edge); 
-void drawBoard3(int edge); 
-void drawBoard4(int edge); 
-void drawBoard5(int edge); 
-void drawBoard6(int edge); 
+void drawBoard1(void); 
+void drawBoard2(void); 
+void drawBoard3(void); 
+void drawBoard4(void); 
+void drawBoard5(void); 
+void drawBoard6(void); 
 
 void drawFullRowBox(union rgb color, int x, int y);
 
