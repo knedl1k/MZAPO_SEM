@@ -42,7 +42,7 @@ int main(void){
   }
 
   initMemory();
-  lcdReset();
+  lcdReset(0XFFFF);
   knobInit();
   //_Bool quit = 0;
   menuReaction();
@@ -64,7 +64,7 @@ int main(void){
 
   //renderMenu();
   
-  
+  //rgb1((union rgb){.r=0,.g=0,.b=0});
   /* KNOBS SECTION */
   /*
   fprintf(stderr,"red%hhd blue%hhd green%hhd\n",knobs.is_r_pressed,knobs.is_g_pressed,knobs.is_b_pressed);

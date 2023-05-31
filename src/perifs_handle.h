@@ -53,7 +53,7 @@ extern uint8_t scaling;
 void initMemory(void);
 
 /*LCD section*/
-void lcdReset(void);
+void lcdReset(int color);
 void lcdRefresh(void);
 
 /*knob section*/
@@ -62,6 +62,7 @@ struct rotation_t updateKnobValues(void);
 
 /*RGB LED section*/
 void rgb1(union rgb color);
+void rgb2(union rgb color);
 
 #ifdef __cplusplus
 } /* extern "C"*/
