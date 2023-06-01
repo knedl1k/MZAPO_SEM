@@ -26,17 +26,21 @@ GetResult drawShapeBasedOnKnobs(int (*shape)[4], int *posX, int *posY, int knobL
 GetResult rotateLeft2(int(*matrix)[4], int pos[2]);
 GetResult rotateRight2(int(*matrix)[4], int pos[2]);
 
-void colorPixel_black_hor(int x, int y); 
-void colorPixel_black_ver(int x, int y); 
+void colorPixelBlackHor(int x, int y); 
+void colorPixelBlackVer(int x, int y); 
 void drawShapeLARGE(int (*shapeMatrix)[6], int y, int x); 
-void drawBoard1(int edge); 
-void drawBoard2(int edge); 
-void drawBoard3(int edge); 
-void drawBoard4(int edge); 
-void drawBoard5(int edge); 
-void drawBoard6(int edge); 
+void drawBoard1(void); 
+void drawBoard2(void); 
+void drawBoard3(void); 
+void drawBoard4(void); 
+void drawBoard5(void); 
+void drawBoard6(void); 
 
 void drawFullRowBox(union rgb color, int x, int y);
+
+//int (*)[4]map1_combi[2][PIECES_PER_MAP]={{piece6,piece2,piece12,piece1},{piece6,piece9,piece1,piece5}};
+
+void manageStack(uint8_t board, uint8_t piece, _Bool in_stack, uint8_t cursor);
 
 
 

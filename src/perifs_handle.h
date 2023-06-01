@@ -31,7 +31,7 @@ union pixel{
 
 extern struct rotation_t{
   _Bool is_r_pressed;
-  int8_t r_knob_data; //-1 backwards, 0 no change, +1 forward
+  int8_t r_knob_data; //-1 left backwards, 0 no change, +1 right forward
   _Bool is_g_pressed;
   int8_t g_knob_data;
   _Bool is_b_pressed;
@@ -48,11 +48,12 @@ typedef struct{
 }knob_t;
 
 extern union pixel fb[LCD_WIDTH][LCD_HEIGHT]; //frame buffer
+extern uint8_t scaling;
 
 void initMemory(void);
 
 /*LCD section*/
-void lcdReset(void);
+void lcdReset(int color);
 void lcdRefresh(void);
 
 /*knob section*/
@@ -61,6 +62,7 @@ struct rotation_t updateKnobValues(void);
 
 /*RGB LED section*/
 void rgb1(union rgb color);
+void rgb2(union rgb color);
 
 #ifdef __cplusplus
 } /* extern "C"*/

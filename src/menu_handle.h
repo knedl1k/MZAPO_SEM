@@ -1,5 +1,5 @@
-#ifndef RENDER_MENU_H
-#define RENDER_MENU_H
+#ifndef HANDLE_MENU_H
+#define HANDLE_MENU_H
 
 #include <stdint.h>
 #include "colors.h"

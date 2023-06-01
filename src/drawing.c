@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
+#include <unistd.h>
 
 #include "colors.h"
 #include "drawing.h"
@@ -92,7 +94,7 @@ void drawRectangle(union rgb color, int x, int y, int width, int height){
   }
 }
 
-int edge=40;
+int edge=33;
 
 void drawSquare(union rgb color, int x, int y){
   // edge=hrana čtverečků, ze kterých budou sestávat dílky, asi se nastavi defaultne
@@ -221,6 +223,9 @@ void drawShape(int(*shapeMatrix)[4], int y, int x){
     }
   }
 
+  lcdRefresh();
+
+
   // Update position
   int* drawShapeResult = drawShape(rotatedShape, &pos[1], &pos[0], 1);
   pos[0] = drawShapeResult[0];
@@ -272,6 +277,7 @@ GetResult drawShapeBasedOnKnobs(int (*shape)[4], int *posX, int *posY, int knobL
 
     free(drawShapeResult);
   return result; 
+
 }
 
 void drawShapeLARGE(int(*shapeMatrix)[6], int y, int x){
@@ -284,6 +290,7 @@ void drawShapeLARGE(int(*shapeMatrix)[6], int y, int x){
       }
     }
   }
+  lcdRefresh();
 }
 
 // DRAW BOARDS
@@ -736,7 +743,7 @@ int SPx=20-t;  // starting point x
 int SPy=30-t;
 
 // BOARD 1
-void drawBoard1(int edge){
+void drawBoard1(void){
   int background[6][6]={{1, 1, 1, 0, 0, 0},{1, 1, 1, 1, 1, 1},{0, 0, 1, 1, 1, 1},
                          {0, 0, 1, 1, 1, 0},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
@@ -774,7 +781,7 @@ void drawBoard1(int edge){
 }
 
 // BOARD 2
-void drawBoard2(int edge){
+void drawBoard2(void){
   int background[6][6]={{0, 1, 1, 0, 0, 0},{1, 1, 1, 0, 0, 0},{1, 1, 1, 1, 1, 0},
                          {1, 1, 1, 1, 1, 0},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
@@ -806,7 +813,7 @@ void drawBoard2(int edge){
 }
 
 // BOARD 3
-void drawBoard3(int edge){
+void drawBoard3(void){
   int background[6][6]={{0, 1, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},{1, 1, 1, 1, 1, 0},
                          {1, 1, 1, 1, 1, 0},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
@@ -838,7 +845,7 @@ void drawBoard3(int edge){
 }
 
 // BOARD 4
-void drawBoard4(int edge){
+void drawBoard4(void){
   int background[6][6]={{1, 1, 0, 0, 0, 0},{1, 1, 0, 0, 0, 0},{1, 1, 1, 0, 1, 0},
                          {1, 1, 1, 1, 1, 0},{0, 0, 1, 1, 1, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
@@ -883,7 +890,7 @@ void drawBoard4(int edge){
 }
 
 // BOARD 5
-void drawBoard5(int edge){
+void drawBoard5(void){
   int background[6][6]={{0, 0, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},
                          {1, 1, 1, 1, 0, 0},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
@@ -910,7 +917,7 @@ void drawBoard5(int edge){
 }
 
 // BOARD 6
-void drawBoard6(int edge){
+void drawBoard6(void){
   int background[6][6]={{0, 1, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},{0, 1, 1, 1, 1, 1},
                          {0, 1, 1, 1, 1, 1},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
@@ -952,4 +959,124 @@ void drawFullRowBox(union rgb color, int x, int y){
   //for(int i=x) 
 }
 
-*/
+
+// board = number of board <1,6>
+// piece = number of piece which is / is not in stack
+// in_stack = determines if it's picked or in stack
+// cursor = where the cursor in the stack is located
+#define ROWS 4
+#define COLS 4
+
+#define MAPS 6
+#define PIECES_PER_MAP 4
+#define NUM_PIECES 12
+
+
+int pieces[NUM_PIECES][ROWS][COLS]=
+{
+
+{{0,0,0,0},
+ {1,1,0,0},
+ {1,0,0,0},
+ {1,0,0,0}}, 
+
+{{1,1,0,0},
+ {1,0,0,0},
+ {1,0,0,0},
+ {1,0,0,0}}, 
+
+{{1,0,0,0},
+ {1,1,0,0},
+ {1,0,0,0},
+ {1,0,0,0}},
+
+{{0,0,0,0},
+ {0,0,0,0},
+ {1,1,0,0},
+ {1,1,0,0}}, 
+
+{{0,0,0,0},
+ {0,1,0,0},
+ {1,1,0,0},
+ {1,0,0,0}},
+
+{{0,0,0,0},
+ {1,0,0,0},
+ {1,1,0,0},
+ {1,1,0,0}},
+
+{{0,0,0,0},
+ {1,1,0,0},
+ {0,1,0,0},
+ {0,1,1,0}},
+
+{{0,0,0,0},
+ {1,0,0,0},
+ {1,1,0,0},
+ {1,0,0,0}},
+
+{{0,0,0,0},
+ {1,0,0,0},
+ {1,0,0,0},
+ {1,0,0,0}},
+
+{{0,0,0,0},
+ {0,0,0,0},
+ {1,0,0,0},
+ {1,1,0,0}},
+
+{{1,0,0,0},
+ {1,0,0,0},
+ {1,0,0,0},
+ {1,0,0,0}}, 
+
+{{0,0,0,0},
+ {0,0,0,0},
+ {1,0,0,0},
+ {1,0,0,0}}
+
+};
+
+int combinations[MAPS][PIECES_PER_MAP]={
+  {5,1,11,0}, {4,3,7,8}, {1,5,7,9},
+  {5,4,6,11}, {2,4,8,11}, {10,5,0,7}
+};
+
+#define OFFSET_STACK edge*2
+
+static void drawStack(uint8_t board){
+  for(size_t i=0;i<PIECES_PER_MAP;++i){
+    drawShape(pieces[combinations[board][i]],  250, 5+i*OFFSET_STACK);
+    i+=1;
+    drawShape(pieces[combinations[board][i]], 390, 93+i*OFFSET_STACK);
+  }
+  
+}
+
+void manageStack(uint8_t board, uint8_t piece, _Bool in_stack, uint8_t cursor){
+  /*
+  for(size_t i=0;i<6;++i){
+    lcdReset(0xFFFF);
+    drawStack(i);
+    sleep(5);
+
+  }
+  */
+  drawStack(board);
+
+  /*
+  switch(board){
+    case 1:
+      
+
+      break;
+
+
+
+
+  }
+  */
+
+
+}
+
