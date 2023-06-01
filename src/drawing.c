@@ -194,14 +194,21 @@ GetResult rotateRight2(int(*matrix)[4], int pos[2]){
   for (int i = 0; i < 4; ++i) {
     for (int j = 0; j < 4; ++j) {
       rotatedShape[i][j] = matrix[3 - j][i];
-
-    colorPixel(color, x+edge, i);
-    colorPixel(color, x+edge+1, i);
-    colorPixel(color, x+edge+2, i);
-    colorPixel(color, x+edge+3, i);
-    colorPixel(color, x+edge+4, i);
     }
   }
+
+  // Update position
+  int* drawShapeResult = drawShape(rotatedShape, &pos[1], &pos[0], 1);
+  pos[0] = drawShapeResult[0];
+  pos[1] = drawShapeResult[1];
+  free(drawShapeResult);
+
+  // Set values in the result struct
+  result.posX = pos[0];
+  result.posY = pos[1];
+  memcpy(result.shape, rotatedShape, 4 * 4 * sizeof(int));
+
+  free(rotatedShape);
   return result;
 }
 
