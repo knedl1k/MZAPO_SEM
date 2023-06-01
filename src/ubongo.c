@@ -45,6 +45,40 @@ int main(void){
   lcdReset();
   knobInit();
   //_Bool quit = 0;
+
+  // menuReaction();
+
+  /* LCD SECTION */
+  printf("Hello world\n");
+
+
+  // in the while loop, draws rotated shape according to which knob is being turned 
+  int knobLeftState = 0; 
+  int knobRightState = 1; 
+  int shape[4][4] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {1, 0, 0, 0}, {1, 1, 1, 0}};
+  int posX = 100; 
+  int posY = 100; 
+  int i = 0; 
+  int* update = malloc(2 * sizeof(int)); 
+  update[0] = posX; 
+  update[1] = posY;  
+
+  while ( i < 5){
+
+
+    GetResult result = drawShapeBasedOnKnobs(shape, &posX, &posY, knobLeftState, knobRightState); 
+    lcdRefresh();
+    posX = result.posX; 
+    posY = result.posY; 
+    memcpy(shape, result.shape, 4 * 4 * sizeof(int));
+
+    i++;
+    
+  }
+
+
+
+
   menuReaction();
 
   /* LCD SECTION */
@@ -60,6 +94,7 @@ int main(void){
 
   //drawBoard4(40); 
 
+
   lcdRefresh();
 
   //renderMenu();
@@ -69,6 +104,16 @@ int main(void){
   /*
   fprintf(stderr,"red%hhd blue%hhd green%hhd\n",knobs.is_r_pressed,knobs.is_g_pressed,knobs.is_b_pressed);
   rgb1((union rgb){.g=255});
+
+  sleep(4);
+  while(1){
+    knobs=updateKnobValues();
+    printf("r %d, g %d, b %d\n", knobs.is_r_pressed,knobs.is_g_pressed,knobs.is_b_pressed);
+    //rgb1((union rgb){.d=r_knob_data});
+    sleep(1);
+  }
+  */
+
   sleep(4);
   while(1){
     knobs=updateKnobValues();
@@ -78,7 +123,7 @@ int main(void){
   }
   */
   sleep(4);
-  printf("Goodbye world\n");
+  printf("\nGoodbye world\n");
   serialize_unlock(); /* Release the lock */
   return 0;
 }

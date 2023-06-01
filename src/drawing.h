@@ -12,9 +12,19 @@ extern "C" {
 void colorPixel(union rgb color, int x, int y);
 void drawRectangle(union rgb color, int x, int y, int width, int height);
 void drawSquare(union rgb color, int x, int y);
-void drawShape(int (*shapeMatrix)[4], int y, int x);
-int (*rotateLeft(int (*matrix)[4]))[4];
-int (*rotateRight(int (*matrix)[4]))[4];
+int* drawShape(int (*shapeMatrix)[4], int* y, int* x, int draw);
+
+
+typedef struct {
+  int posX;
+  int posY;
+  int shape[4][4];
+} GetResult;
+
+
+GetResult drawShapeBasedOnKnobs(int (*shape)[4], int *posX, int *posY, int knobLeftState, int knobRightState); 
+GetResult rotateLeft2(int(*matrix)[4], int pos[2]);
+GetResult rotateRight2(int(*matrix)[4], int pos[2]);
 
 void colorPixel_black_hor(int x, int y); 
 void colorPixel_black_ver(int x, int y); 
