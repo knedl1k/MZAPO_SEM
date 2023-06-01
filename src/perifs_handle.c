@@ -73,7 +73,9 @@ void knobInit(void){
   do{  //flush the wrong values
     //sleep(1);
     knobs=updateKnobValues();
-    printString("Loading! Please wait.",80,220,BLCK,scaling);
+    printString("Loading! Please wait.",80,120,BLCK,scaling);
+    printString("If it takes longer than 10s",20,220,BLCK,scaling);
+    printString("move with the red knob.",20,260,BLCK,scaling);
     printf("r %d g %d b %d\n",knobs.r_knob_data,knobs.g_knob_data,knobs.b_knob_data);
   }while(knobs.r_knob_data!=0 || knobs.g_knob_data!=0 || knobs.b_knob_data!=0);
 
@@ -153,4 +155,23 @@ void rgb2(union rgb color){
   uint32_t *ptr=spiled_base+SPILED_REG_LED_RGB2_o;
   printf("rgb2:%x\n",color.d);
   *ptr=color.d;
+}
+
+void initRGBStrip(){
+  uint32_t *ptr=spiled_base+SPILED_REG_LED_LINE_o;
+  *ptr=0xFF;
+}
+
+void rgbStrip(int8_t change){
+  uint32_t *ptr=spiled_base+SPILED_REG_LED_LINE_o;
+  uint32_t new=1;
+  static uint8_t current=0;
+  current+=change;
+  
+  for(int8_t i=0;i<current;++i){
+    *ptr *= 0xFF;
+  }
+
+
+  //*ptr=0xFFFFFFFF;
 }

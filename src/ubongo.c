@@ -113,7 +113,7 @@ int main(void){
     sleep(1);
   }
   */
-
+  /*
   sleep(4);
   while(1){
     knobs=updateKnobValues();
