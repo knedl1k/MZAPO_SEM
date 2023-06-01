@@ -9,6 +9,7 @@
 union rgb color;
 extern union pixel fb[LCD_WIDTH][LCD_HEIGHT];  // frame buffer
 
+
 union rgb red={.r=255, .g=0, .b=0};
 union rgb black={.r=0, .g=0, .b=0};
 union rgb blue={.r=0, .g=0, .b=255};
@@ -96,7 +97,6 @@ int edge=40;
 void drawSquare(union rgb color, int x, int y){
   // edge=hrana čtverečků, ze kterých budou sestávat dílky, asi se nastavi defaultne
   // left and right edge
-  //printf("draw square called\n");
   for(int i=x; i < x+edge; ++i){
     colorPixel(color, i, y);
     colorPixel(color, i, y+1);
@@ -200,6 +200,24 @@ GetResult rotateRight2(int(*matrix)[4], int pos[2]){
   for (int i = 0; i < 4; ++i) {
     for (int j = 0; j < 4; ++j) {
       rotatedShape[i][j] = matrix[3 - j][i];
+
+    colorPixel(color, x+edge, i);
+    colorPixel(color, x+edge+1, i);
+    colorPixel(color, x+edge+2, i);
+    colorPixel(color, x+edge+3, i);
+    colorPixel(color, x+edge+4, i);
+  }
+}
+
+// nakresli dilek zadany matici, coords urcuji pozici nejvyssiho ctverecku dilku nejvic vlevo
+void drawShape(int(*shapeMatrix)[4], int y, int x){
+  // ex.: shapeMatrix=[[1, 1 , 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]]
+  for(int i=0; i < 4; ++i){
+    for(int j=0; j < 4; ++j){
+      if(shapeMatrix[i][j] == 1){
+        drawSquare(black, x+i*edge, y+j*edge);
+        printf("HERE");
+      }
     }
   }
 
@@ -217,9 +235,6 @@ GetResult rotateRight2(int(*matrix)[4], int pos[2]){
   free(rotatedShape);
   return result;
 }
-
-
-
 
 GetResult drawShapeBasedOnKnobs(int (*shape)[4], int *posX, int *posY, int knobLeftState, int knobRightState) {
   printf("posX: %d, posY: %d\n", *posX, *posY);      
@@ -258,9 +273,6 @@ GetResult drawShapeBasedOnKnobs(int (*shape)[4], int *posX, int *posY, int knobL
     free(drawShapeResult);
   return result; 
 }
-
-
-
 
 void drawShapeLARGE(int(*shapeMatrix)[6], int y, int x){
   // ex.: shapeMatrix=[[1, 1 , 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]]
@@ -683,6 +695,14 @@ int(*rotateLeft(int(*matrix)[4]))[4]{
     for(int j=0; j < 4; ++j){
       result[i][j]=matrix[j][3-i];
     }
+
+int(*rotateLeft(int(*matrix)[4]))[4]{
+  int(*result)[4]=malloc(4*sizeof(*result));
+  for(int i=0; i < 4; ++i){
+    for(int j=0; j < 4; ++j){
+      result[i][j]=matrix[j][3-i];
+    }
+
   }
   return result;
 }
@@ -696,6 +716,7 @@ int(*rotateRight(int(*matrix)[4]))[4]{
   }
   return result;
 }
+
 
 void drawShapeLARGE(int(*shapeMatrix)[6], int y, int x){
   // ex.: shapeMatrix=[[1, 1 , 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]]
@@ -842,6 +863,7 @@ void drawBoard4(int edge){
   for(int i=SPy+4*edge+2*t; i < SPy+5*edge+3*t; ++i){
     colorPixelBlackVer(SPx+2*edge, i);
   }
+
   for(int i=SPx+2*edge; i < SPx+5*edge+3*t; ++i){
     colorPixelBlackHor(i, SPy+5*edge+2*t);
   }
@@ -884,6 +906,7 @@ void drawBoard5(int edge){
     colorPixelBlackVer(SPx+4*edge+2*t, i);
   }
   lcdRefresh();
+
 }
 
 // BOARD 6
@@ -922,6 +945,7 @@ void drawBoard6(int edge){
     colorPixelBlackVer(SPx+edge, i);
   }
   lcdRefresh();
+
 }
 
 void drawFullRowBox(union rgb color, int x, int y){ 
