@@ -9,15 +9,25 @@
 extern "C" {
 #endif
 
-void color_pixel(union rgb color, int x, int y);
+void colorPixel(union rgb color, int x, int y);
 void drawRectangle(union rgb color, int x, int y, int width, int height);
 void drawSquare(union rgb color, int x, int y);
-void drawShape(int (*shapeMatrix)[4], int y, int x);
-int (*rotateLeft(int (*matrix)[4]))[4];
-int (*rotateRight(int (*matrix)[4]))[4];
+int* drawShape(int (*shapeMatrix)[4], int* y, int* x, int draw);
 
-void color_pixel_black_hor(int x, int y); 
-void color_pixel_black_ver(int x, int y); 
+
+typedef struct {
+  int posX;
+  int posY;
+  int shape[4][4];
+} GetResult;
+
+
+GetResult drawShapeBasedOnKnobs(int (*shape)[4], int *posX, int *posY, int knobLeftState, int knobRightState); 
+GetResult rotateLeft2(int(*matrix)[4], int pos[2]);
+GetResult rotateRight2(int(*matrix)[4], int pos[2]);
+
+void colorPixel_black_hor(int x, int y); 
+void colorPixel_black_ver(int x, int y); 
 void drawShapeLARGE(int (*shapeMatrix)[6], int y, int x); 
 void drawBoard1(int edge); 
 void drawBoard2(int edge); 
@@ -25,6 +35,8 @@ void drawBoard3(int edge);
 void drawBoard4(int edge); 
 void drawBoard5(int edge); 
 void drawBoard6(int edge); 
+
+void drawFullRowBox(union rgb color, int x, int y);
 
 
 
