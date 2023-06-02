@@ -36,7 +36,7 @@ extern struct rotation_t{
   int8_t g_knob_data;
   _Bool is_b_pressed;
   int8_t b_knob_data;
-} rotation_t;
+}rotation_t;
 
 typedef struct{
   uint8_t r_cur; //red
@@ -53,7 +53,7 @@ extern uint8_t scaling;
 void initMemory(void);
 
 /*LCD section*/
-void lcdReset(int color);
+void lcdReset(union rgb color);
 void lcdRefresh(void);
 
 /*knob section*/
@@ -63,6 +63,7 @@ struct rotation_t updateKnobValues(void);
 /*RGB LED section*/
 void rgb1(union rgb color);
 void rgb2(union rgb color);
+void LEDStrip(int8_t change);
 
 #ifdef __cplusplus
 } /* extern "C"*/

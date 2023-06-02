@@ -11,7 +11,13 @@ void *parlcd_base;
 void *spiled_base;
 uint32_t prev_rotate;
 
+union rgb PRP={.r=255,.g=0,.b=255};
+union rgb WHT={.r=255,.g=255,.b=255};
 union rgb BLCK={.r=0,.g=0,.b=0};
+union rgb GRN={.r=0,.g=255,.b=0};
+union rgb RED={.r=255, .g=0, .b=0};
+union rgb BLU={.r=0, .g=0, .b=255};
+
 
 void initMemory(void){
   parlcd_base=map_phys_address(PARLCD_REG_BASE_PHYS,PARLCD_REG_SIZE,0); //0=nechcem to cashovat  
@@ -28,9 +34,9 @@ void initMemory(void){
 */
 
 /*initializes/resets the LCD*/
-void lcdReset(int color){
+void lcdReset(union rgb color){
   //parlcd_hx8357_init(parlcd_base); //!
-  int background_color=color; //0xFFFF
+  int background_color=color.d;
   for(unsigned short i=0;i<LCD_HEIGHT;++i)
     for(unsigned short j=0;j<LCD_WIDTH;++j)
       fb[j][i].d=background_color;
@@ -43,8 +49,7 @@ void lcdRefresh(void){
   for(unsigned short i=0; i<LCD_HEIGHT; ++i)
     for(unsigned short j=0; j<LCD_WIDTH; ++j)
       parlcd_write_data(parlcd_base, fb[j][i].d);
-
-  //fprintf(stderr,"refreshing LCD\n");
+  //fprintf(stderr,"DEBUG: refreshing LCD\n");
 }
 
 /*
@@ -79,7 +84,7 @@ void knobInit(void){
     printf("r %d g %d b %d\n",knobs.r_knob_data,knobs.g_knob_data,knobs.b_knob_data);
   }while(knobs.r_knob_data!=0 || knobs.g_knob_data!=0 || knobs.b_knob_data!=0);
 
- lcdReset(0xFFFF);
+ lcdReset(WHT);
 }
 
 /*updates all data related to knobs*/
@@ -146,14 +151,14 @@ struct rotation_t updateKnobValues(void){
 /*sets RGB1 to specified color*/
 void rgb1(union rgb color){
   uint32_t *ptr=spiled_base+SPILED_REG_LED_RGB1_o;
-  printf("rgb1:%x\n",color.d);
+  fprintf(stderr,"DEBUG: rgb1:%x\n",color.d);
   *ptr=color.d;
 }
 
 /*sets RGB2 to specified color*/
 void rgb2(union rgb color){
   uint32_t *ptr=spiled_base+SPILED_REG_LED_RGB2_o;
-  printf("rgb2:%x\n",color.d);
+  fprintf(stderr,"DEBUG: rgb2:%x\n",color.d);
   *ptr=color.d;
 }
 
@@ -162,9 +167,9 @@ void initRGBStrip(){
   *ptr=0xFF;
 }
 
-void rgbStrip(int8_t change){
+void LEDStrip(int8_t change){
   uint32_t *ptr=spiled_base+SPILED_REG_LED_LINE_o;
-  uint32_t new=1;
+  //uint32_t new=1;
   static uint8_t current=0;
   current+=change;
   

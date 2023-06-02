@@ -12,10 +12,11 @@
 #include "drawing.h"
 #include "colors.h"
 
-union rgb PRP={.r=255,.g=0,.b=255};
-union rgb WHT={.r=255,.g=255,.b=255};
+extern union rgb PRP;
+extern union rgb WHT;
+extern union rgb BLCK;
+extern union rgb GRN;
 
-//union rgb BLACK={.r=255,.g=255,.b=255};
 
 /*draws a character 'c' onto a framebuffer 'fb' at position (x, y), with a scaling factor*/
 void printChar(char c, int x, int y, union rgb color,unsigned char scale){
@@ -26,7 +27,7 @@ void printChar(char c, int x, int y, union rgb color,unsigned char scale){
     return;
   }
   */
-  //int color=0xffff;
+  
   //Check if the character 'c' is within the range of characters defined by the font set 'font_rom8x16'
   if (c<font_rom8x16.firstchar || c >= (font_rom8x16.size+font_rom8x16.firstchar))
     //If the character is out of range, use the default character defined by the font set

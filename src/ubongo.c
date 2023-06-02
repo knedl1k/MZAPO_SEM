@@ -26,9 +26,14 @@
 #include "drawing.h"
 #include "serialize_lock.h"
 #include "colors.h"
+#include "game_handle.h"
 
 //union rgb WHITE={.r=255,.g=255,.b=255};
 struct rotation_t knobs;
+extern union rgb PRP;
+extern union rgb WHT;
+extern union rgb BLCK;
+extern union rgb GRN;
 
 
 int main(void){
@@ -42,20 +47,15 @@ int main(void){
   }
 
   initMemory();
-  lcdReset(0XFFFF);
+  lcdReset(WHT);
   knobInit();
-  //_Bool quit = 0;
-
-  // menuReaction();
-
-  /* LCD SECTION */
-  printf("Hello world\n");
+  printf("Init completed.\n");
 
 
   // in the while loop, draws rotated shape according to which knob is being turned 
   int knobLeftState = 0; 
   int knobRightState = 1; 
-  int shape[4][4] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {1, 0, 0, 0}, {1, 1, 1, 0}};
+  _Bool shape[4][4] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {1, 0, 0, 0}, {1, 1, 1, 0}};
   int posX = 100; 
   int posY = 100; 
   int i = 0; 
@@ -64,68 +64,26 @@ int main(void){
   update[1] = posY;  
 
   while ( i < 5){
-
-
     GetResult result = drawShapeBasedOnKnobs(shape, &posX, &posY, knobLeftState, knobRightState); 
     lcdRefresh();
     posX = result.posX; 
     posY = result.posY; 
-    memcpy(shape, result.shape, 4 * 4 * sizeof(int));
-
+    memcpy(shape, result.shape, 4*4*sizeof(_Bool));
     i++;
-    
+    sleep(4);
   }
 
-
-
-
-  menuReaction();
-
-  /* LCD SECTION */
-  //printf("Hello world\n");
-  //fontString("World Hello", 0, -200, 1);
-  //drawSquare(-200, 200);
-  //lcd_frame();
-  // union rgb blue = {.r=0, .g=0, .b=255};
-  //drawRectangle(blue,-100, 50, 200, 30); 
-  // drawBoard1(40);
-
-  //drawBoard4(40); 
-
-  //drawBoard4(40); 
+  rgb1((union rgb){.r=0,.g=0,.b=0});
+  rgb2((union rgb){.r=0,.g=0,.b=0});
+  gameReaction();
+  //menuReaction();
 
 
   lcdRefresh();
 
-  //renderMenu();
-  
-  //rgb1((union rgb){.r=0,.g=0,.b=0});
-  /* KNOBS SECTION */
-  /*
-  fprintf(stderr,"red%hhd blue%hhd green%hhd\n",knobs.is_r_pressed,knobs.is_g_pressed,knobs.is_b_pressed);
-  rgb1((union rgb){.g=255});
-
-  sleep(4);
-  while(1){
-    knobs=updateKnobValues();
-    printf("r %d, g %d, b %d\n", knobs.is_r_pressed,knobs.is_g_pressed,knobs.is_b_pressed);
-    //rgb1((union rgb){.d=r_knob_data});
-    sleep(1);
-  }
-  */
-  /*
-  sleep(4);
-  while(1){
-    knobs=updateKnobValues();
-    printf("r %d, g %d, b %d\n", knobs.is_r_pressed,knobs.is_g_pressed,knobs.is_b_pressed);
-    //rgb1((union rgb){.d=r_knob_data});
-    sleep(1);
-  }
-  */
   sleep(4);
   printf("\nGoodbye world\n");
   serialize_unlock(); /* Release the lock */
+
   return 0;
 }
-
-
