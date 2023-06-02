@@ -10,12 +10,7 @@
     "adamej14@fel.cvut.cz",
   ),
 )
-/*
-#set align(center)
-B0B35APO
-#set align(left)
-//= Ovládání menu
-*/
+
 = Spuštění
 Aplikace se spouští běžným spuštěním programu z příkazové řádky, tedy `./ubongo`.
 
@@ -51,14 +46,16 @@ Po zvolení tlačítka `Quit` v hlavním menu se program ukončí a displej se n
 
 = Ovládání aplikace během hry
 
+Na implementaci samotné herní mechaniky bohužel nezbyl čas.
 
+Průběh hry byl zamýšlen: Náhodně se vybere jedna z 6 předpřipravených map s příslušnými herními dílky, které
+řeší danou mapu. Následně bude mít hráč umístěn kurzor na prvním z nich. Pomocí zeleného knobu se pohybuje 
+kurzorem po herních dílkách. Stiskem zeleného knobu se potvrdí výběr dílku. Následně se kurzor spolu s dílkem
+umístí na hrací plochu.
 
-\
-\
-\
-\
-\
-\
+Ovládání v této sekci se přepne na posun po *x* ose pomocí červeného knobu, posun po *y* ose pomocí zeleného knobu a
+*rotaci* pomocí modrého knobu. Zmáčknutí červeného tlačítka vrátí hráče s neúmístěným dílkem zpět do stacku s dílky. Zmáčknutím zeleného knobu s dílkem na hrací ploše se provede place, při kterém se zkontroluje, jestli je tah validní. Pokud ano, zároveň se otestuje, jestli řeší danou mapu, čímž se rozsvítí jedna sekce na LED pásku. Zmáčknutí modrého knobu kdykoliv během hry vrátí hráče zpět do hlavního menu.
+
 \
 \
 \
@@ -88,8 +85,8 @@ Soubor funkcí, které korektně inicializují a pracují s perifériemi.
  struktury `knob_t`, vyhodnocuje, jestli se jednalo o skutečné otočení voliče, či jen o zákmit.
  Také zpracovává informace o zmáčknutí knobů.
 
-- funkce `void rgb1(union rgb color)` a `void rgb2(union rgb color)` \
- Funkce, které mají jako vstupní argument barvu, kterou následně zobrazí na LED diodě 1, respektive 2. 
+- `void rgb1(union rgb color)` & `void rgb2(union rgb color)` \
+ Funkce, které mají jako vstupní argument barvu, kterou následně zobrazí na LED diodě. 
 
 == drawing.c
 Soubor zaměřen na funkce, u nichž je primární funkce kreslení tvarů, či výpomoc při barvení pixelů.
@@ -99,8 +96,14 @@ Soubor zaměřen na funkce, u nichž je primární funkce kreslení tvarů, či 
 - `void drawRectangle(union rgb color, int x, int y, int width, int height)` \
  Na vstupních (x,y) souřadnicích nakreslí obdelník o rozměrech (width, height) s barvou hrany `color`.
 
+== maps.c
+Zdrojový soubor pro všechny důležité funkce, které vykreslují herní mapy a jejich řešící herní dílky.
+
 - funkce `void drawBoard1(int edge)` až `void drawBoard`*n*`(int edge)` \
  Nakreslí předem definové hrací plochy s černou hranou a červeným podkresem.
+
+- `void manageStack(uint8_t board, uint8_t piece, _Bool in_stack, uint8_t cursor)` \
+  Spravuje render dílku na hratelném stacku pro danou mapu. V momentální implementaci pouze vykreslí hratelné dílky.
 
 == text_display.c
 Zde jsou funkce, které zapisují příslušné stringy nebo chary daného fontu do frame bufferu. 
@@ -111,7 +114,7 @@ Zde jsou funkce, které zapisují příslušné stringy nebo chary daného fontu
 - `void printString(char *word, int x, int y,union rgb color, unsigned char scale)` \
  Jako vstupní parametr má string *word*. Výpis na displej probíhá tak, že se postupně volá funkce `printChar` 
  dokud se nevypíší všechny chary příslušného stringu.
-\
+
 - `void drawRectangleWithText(char *str, int x, int y, union rgb color,unsigned char scale, _Bool selected)` \
  Vypíše string *str* na displej a dynamicky okolo něj vykreslí obdelníkový rámček barvy *color*. Vstupní parametr 
  *selected* zajišťuje vykreslování případného kursoru. Pokud je *selected* `true`, pak okolo rámečku textu vykreslí 
@@ -129,12 +132,19 @@ Funkce, které se starají o správné fungování a reakce menu na uživatelsk�
  Soubor funkcí, které vyrenderují všechna tlačítka pro příslušné menu/submenu s nadpisem. Vstupní parametr *selected*
  zajišťuje render kursoru okolo tlačítka. 
 
-- ` ` \
+- možnost nastavit scaling  fontu na 2 (defaultní) a 1.
 
-- ` ` \
+- vzhledem k nezvládnuté implementaci samotné herní mechaniky je submenu s nastavením obtížnosti fakticky jen ukázkové,
+  protože není co nastavovat.
 
 == game_handle.c
 
+- `void gameReaction(void)` \
+  V aktuální implementaci se zde nachází cyklus, který v určitém intervalu prolistuje všechny herní mapy a jejich
+  dílkové kombinace. Zároveň se zde také nachází rotace dílku okolo své osy pro ukázku funkčnosti.
+
+  Zamýšlená byla jako funkce, ve které je hlavní herní smyčka. Zpracovávala by vstup z knobů a řídila spouštění
+  pomocných herních mechanik. 
 
 
 
