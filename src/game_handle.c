@@ -27,24 +27,55 @@ void gameReaction(void){
   //knobs=updateKnobValues();
   for(uint8_t i=0;i<6;++i){
     lcdReset(WHT);
-    (*boards[i])(); //!EXAMPLE  
+    (*boards[i])();
     manageStack(i,1,1,1);
 
     rgb1(PRP);
     rgb2(BLCK);
-    sleep(6);
+    (i%2)? LEDStrip(0xFF00FF00) : LEDStrip(0x00FF00FF);
+    sleep(0);
+
     rgb2(GRN);
     rgb1(BLCK);
   }
 
+  lcdReset(WHT);
+
+  // in the while loop, draws rotated shape according to which knob is being turned 
+  int knobLeftState = 0; 
+  int knobRightState = 1; 
+  int shape[4][4] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {1, 0, 0, 0}, {1, 1, 1, 0}};
+  int posX = 100; 
+  int posY = 100; 
+  int i = 0; 
+  int* update = malloc(2 * sizeof(int)); 
+  update[0] = posX; 
+  update[1] = posY;  
+
+  while ( i < 5){
+    lcdReset(WHT);
+    GetResult result = drawShapeBasedOnKnobs(shape, &posX, &posY, knobLeftState, knobRightState);
+    
+    lcdRefresh();
+    posX = result.posX; 
+    posY = result.posY; 
+    memcpy(shape, result.shape, 4*4*sizeof(int));
+    i+=1;
+    
+    sleep(4);
+    (i%2)? LEDStrip(0x0F0F0F0F) : LEDStrip(0xF0F0F0F0);
+  }
+
+  lcdReset(BLCK);
+
+  printString("To leave press blue knob.",30,150,WHT,2);
 
   while(! quit){
     knobs=updateKnobValues();
     quit=knobs.is_b_pressed;
-    LEDStrip(1);
+
 
     sleep(0.8);
-    LEDStrip(-1);
   }
   
 

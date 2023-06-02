@@ -63,7 +63,7 @@ struct rotation_t updateKnobValues(void);
 /*RGB LED section*/
 void rgb1(union rgb color);
 void rgb2(union rgb color);
-void LEDStrip(int8_t change);
+void LEDStrip(uint32_t change);
 
 #ifdef __cplusplus
 } /* extern "C"*/

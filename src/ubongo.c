@@ -49,41 +49,22 @@ int main(void){
   initMemory();
   lcdReset(WHT);
   knobInit();
-  printf("Init completed.\n");
-
-
-  // in the while loop, draws rotated shape according to which knob is being turned 
-  int knobLeftState = 0; 
-  int knobRightState = 1; 
-  _Bool shape[4][4] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {1, 0, 0, 0}, {1, 1, 1, 0}};
-  int posX = 100; 
-  int posY = 100; 
-  int i = 0; 
-  int* update = malloc(2 * sizeof(int)); 
-  update[0] = posX; 
-  update[1] = posY;  
-
-  while ( i < 5){
-    GetResult result = drawShapeBasedOnKnobs(shape, &posX, &posY, knobLeftState, knobRightState); 
-    lcdRefresh();
-    posX = result.posX; 
-    posY = result.posY; 
-    memcpy(shape, result.shape, 4*4*sizeof(_Bool));
-    i++;
-    sleep(4);
-  }
-
+  LEDStrip(0);
   rgb1((union rgb){.r=0,.g=0,.b=0});
   rgb2((union rgb){.r=0,.g=0,.b=0});
-  gameReaction();
-  //menuReaction();
+  
+  printf("Init completed.\n");
 
+  
+  menuReaction();
+
+  //gameReaction();
 
   lcdRefresh();
 
   sleep(4);
-  printf("\nGoodbye world\n");
-  serialize_unlock(); /* Release the lock */
+  printf("The end of APONGO has come.\n");
 
+  serialize_unlock(); /* Release the lock */
   return 0;
 }

@@ -74,7 +74,8 @@ static uint32_t knobsVal(void){
 
 void knobInit(void){
   prev_rotate=0x0;
-  struct rotation_t knobs;
+  struct rotation_t knobs;//!
+  /*
   do{  //flush the wrong values
     //sleep(1);
     knobs=updateKnobValues();
@@ -83,8 +84,8 @@ void knobInit(void){
     printString("move with the red knob.",20,260,BLCK,scaling);
     printf("r %d g %d b %d\n",knobs.r_knob_data,knobs.g_knob_data,knobs.b_knob_data);
   }while(knobs.r_knob_data!=0 || knobs.g_knob_data!=0 || knobs.b_knob_data!=0);
-
- lcdReset(WHT);
+  */
+  lcdReset(WHT);
 }
 
 /*updates all data related to knobs*/
@@ -151,14 +152,14 @@ struct rotation_t updateKnobValues(void){
 /*sets RGB1 to specified color*/
 void rgb1(union rgb color){
   uint32_t *ptr=spiled_base+SPILED_REG_LED_RGB1_o;
-  fprintf(stderr,"DEBUG: rgb1:%x\n",color.d);
+  //fprintf(stderr,"DEBUG: rgb1:%x\n",color.d);
   *ptr=color.d;
 }
 
 /*sets RGB2 to specified color*/
 void rgb2(union rgb color){
   uint32_t *ptr=spiled_base+SPILED_REG_LED_RGB2_o;
-  fprintf(stderr,"DEBUG: rgb2:%x\n",color.d);
+  //fprintf(stderr,"DEBUG: rgb2:%x\n",color.d);
   *ptr=color.d;
 }
 
@@ -167,15 +168,9 @@ void initRGBStrip(){
   *ptr=0xFF;
 }
 
-void LEDStrip(int8_t change){
+void LEDStrip(uint32_t change){
   uint32_t *ptr=spiled_base+SPILED_REG_LED_LINE_o;
-  //uint32_t new=1;
-  static uint8_t current=0;
-  current+=change;
-  
-  for(int8_t i=0;i<current;++i){
-    *ptr *= 0xFF;
-  }
+  *ptr=change;
 
 
   //*ptr=0xFFFFFFFF;

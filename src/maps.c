@@ -19,7 +19,7 @@ extern union rgb GRN;
 #define PIECES_PER_MAP 4
 #define NUM_PIECES 12
 
-_Bool pieces[NUM_PIECES][ROWS][COLS]=
+int pieces[NUM_PIECES][ROWS][COLS]=
 {
 
 {{0,0,0,0},
@@ -97,7 +97,7 @@ int SPy=30-t;
 
 // BOARD 1
 void drawBoard1(void){
-  _Bool background[6][6]={{1, 1, 1, 0, 0, 0},{1, 1, 1, 1, 1, 1},{0, 0, 1, 1, 1, 1},
+  int background[6][6]={{1, 1, 1, 0, 0, 0},{1, 1, 1, 1, 1, 1},{0, 0, 1, 1, 1, 1},
                          {0, 0, 1, 1, 1, 0},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
   
@@ -127,7 +127,7 @@ void drawBoard1(void){
 
 // BOARD 2
 void drawBoard2(void){
-  _Bool background[6][6]={{0, 1, 1, 0, 0, 0},{1, 1, 1, 0, 0, 0},{1, 1, 1, 1, 1, 0},
+  int background[6][6]={{0, 1, 1, 0, 0, 0},{1, 1, 1, 0, 0, 0},{1, 1, 1, 1, 1, 0},
                          {1, 1, 1, 1, 1, 0},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
 
@@ -153,7 +153,7 @@ void drawBoard2(void){
 
 // BOARD 3
 void drawBoard3(void){
-  _Bool background[6][6]={{0, 1, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},{1, 1, 1, 1, 1, 0},
+  int background[6][6]={{0, 1, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},{1, 1, 1, 1, 1, 0},
                          {1, 1, 1, 1, 1, 0},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
 
@@ -179,7 +179,7 @@ void drawBoard3(void){
 
 // BOARD 4
 void drawBoard4(void){
-  _Bool background[6][6]={{1, 1, 0, 0, 0, 0},{1, 1, 0, 0, 0, 0},{1, 1, 1, 0, 1, 0},
+  int background[6][6]={{1, 1, 0, 0, 0, 0},{1, 1, 0, 0, 0, 0},{1, 1, 1, 0, 1, 0},
                          {1, 1, 1, 1, 1, 0},{0, 0, 1, 1, 1, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
 
@@ -213,7 +213,7 @@ void drawBoard4(void){
 
 // BOARD 5
 void drawBoard5(void){
-  _Bool background[6][6]={{0, 0, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},
+  int background[6][6]={{0, 0, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},
                          {1, 1, 1, 1, 0, 0},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
 
@@ -235,7 +235,7 @@ void drawBoard5(void){
 
 // BOARD 6
 void drawBoard6(void){
-  _Bool background[6][6]={{0, 1, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},{0, 1, 1, 1, 1, 1},
+  int background[6][6]={{0, 1, 1, 1, 0, 0},{1, 1, 1, 1, 0, 0},{0, 1, 1, 1, 1, 1},
                          {0, 1, 1, 1, 1, 1},{0, 0, 0, 0, 0, 0},{0, 0, 0, 0, 0, 0}};
   drawShapeLARGE(background, SPx+t, SPy+t);
 
@@ -264,7 +264,7 @@ void drawBoard6(void){
 }
 
 // nakresli dilek zadany matici, coords urcuji pozici nejvyssiho ctverecku dilku nejvic vlevo
-static void drawShapeNormal(_Bool(*shapeMatrix)[4], int y, int x){
+static void drawShapeNormal(int(*shapeMatrix)[4], int y, int x){
   // ex.: shapeMatrix=[[1, 1 , 0, 0], [0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0]]
   for(uint8_t i=0; i < 4; ++i)
     for(uint8_t j=0; j < 4; ++j)
