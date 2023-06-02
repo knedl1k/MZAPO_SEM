@@ -1,7 +1,7 @@
 #import "config.typ": *
 
 #show: project.with(
-  title: "Uživatelská dokumentace pro APONGO",
+  title: "Dokumentace pro APONGO",
          
   authors: (
     "Rozálie Bílková ",
@@ -10,6 +10,11 @@
     "adamej14@fel.cvut.cz",
   ),
 )
+
+Testováno na desce č. 0926 0009 1144, která má jiný displej. V `perifs_handle.c` je proto na *25.* řádku příkaz 
+`parlcd_hx8357_init(parlcd_base);` zakomentovaný pro korektní funkci.
+
+Kompilace je doporučena pomocí přiloženého Makefile.
 
 = Spuštění
 Aplikace se spouští běžným spuštěním programu z příkazové řádky, tedy `./ubongo`.
@@ -43,6 +48,12 @@ Po zvolení tlačítka `Quit` v hlavním menu se program ukončí a displej se n
 \
 \
 \
+\
+\
+\
+\
+\
+\
 
 = Ovládání aplikace během hry
 
@@ -54,13 +65,16 @@ kurzorem po herních dílkách. Stiskem zeleného knobu se potvrdí výběr díl
 umístí na hrací plochu.
 
 Ovládání v této sekci se přepne na posun po *x* ose pomocí červeného knobu, posun po *y* ose pomocí zeleného knobu a
-*rotaci* pomocí modrého knobu. Zmáčknutí červeného tlačítka vrátí hráče s neúmístěným dílkem zpět do stacku s dílky. Zmáčknutím zeleného knobu s dílkem na hrací ploše se provede place, při kterém se zkontroluje, jestli je tah validní. Pokud ano, zároveň se otestuje, jestli řeší danou mapu, čímž se rozsvítí jedna sekce na LED pásku. Zmáčknutí modrého knobu kdykoliv během hry vrátí hráče zpět do hlavního menu.
+*rotaci* pomocí modrého knobu. Zmáčknutí červeného tlačítka vrátí hráče s neúmístěným dílkem zpět do stacku s dílky. 
+Zmáčknutím zeleného knobu s dílkem na hrací ploše se provede place, při kterém se zkontroluje, jestli je tah validní. 
+Pokud ano, zároveň se otestuje, jestli řeší danou mapu, čímž se rozsvítí jedna sekce na LED pásku. Zmáčknutí modrého 
+knobu kdykoliv během hry vrátí hráče zpět do hlavního menu.
 
-\
-\
 \
 
 = Vlastní soubory
+Repozitář je dostupný https://github.com/knedl1k/MZAPO_SEM, \
+případně mirror na https://gitlab.fel.cvut.cz/adamej14/MZAPO_SEM.
 == ubongo.c
 Hlavní soubor, obsahuje kromě hlavní funkce `main()` také inicializace periférií. Zároveň spouští funkci 
 `menuReaction()`, která zajištujě chod úvodního menu. 
@@ -147,4 +161,12 @@ Funkce, které se starají o správné fungování a reakce menu na uživatelsk�
   pomocných herních mechanik. 
 
 
+= UML diagram aktuálního stavu programu
+
+#figure(
+  image("uml_diagram.png", width: 100%),
+  caption: [
+    UML diagram běhu programu a reakce jednotlivých funkcí.
+  ],
+)
 
