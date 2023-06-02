@@ -34,7 +34,7 @@ textem. Výběr a spuštění akce je provedeno zmáčknutím zeleného knobu.
 Jestliže uživatel v nastavení nenastaví obtížnost anebo scaling písma a zmáčkne tlačítko *Play*, nastaví se 
 přednastavené hodnoty, tedy obtížnost `Potato` a scaling `2`.
 
-Po zmáčknutí tlačítka *Settings* se uživatel dostane do submena, ve kterém je na výběr změna obtížnosti *Difficulty* 
+Po zmáčknutí tlačítka *Settings* se uživatel dostane do submenu, ve kterém je na výběr změna obtížnosti *Difficulty* 
 nebo změna scalingu písma v celém programu *Scale*. Zároveň má možnost se vrátit do hlavního menu pomocí *Back* tlačítka. 
 
 V *Difficulty* jsou na výběr obtížnosti: `Potato` (defaultní), `Nightmare` a `Hell`. Po zvolení obtížnosti se 
@@ -61,11 +61,11 @@ Na implementaci samotné herní mechaniky bohužel nezbyl čas.
 
 Průběh hry byl zamýšlen: Náhodně se vybere jedna z 6 předpřipravených map s příslušnými herními dílky, které
 řeší danou mapu. Následně bude mít hráč umístěn kurzor na prvním z nich. Pomocí zeleného knobu se pohybuje 
-kurzorem po herních dílkách. Stiskem zeleného knobu se potvrdí výběr dílku. Následně se kurzor spolu s dílkem
+kurzorem po herních dílcích. Stiskem zeleného knobu se potvrdí výběr dílku. Následně se kurzor spolu s dílkem
 umístí na hrací plochu.
 
 Ovládání v této sekci se přepne na posun po *x* ose pomocí červeného knobu, posun po *y* ose pomocí zeleného knobu a
-*rotaci* pomocí modrého knobu. Zmáčknutí červeného tlačítka vrátí hráče s neúmístěným dílkem zpět do stacku s dílky. 
+*rotaci* pomocí modrého knobu. Zmáčknutí červeného tlačítka vrátí hráče s neumístěným dílkem zpět do stacku s dílky. 
 Zmáčknutím zeleného knobu s dílkem na hrací ploše se provede place, při kterém se zkontroluje, jestli je tah validní. 
 Pokud ano, zároveň se otestuje, jestli řeší danou mapu, čímž se rozsvítí jedna sekce na LED pásku. Zmáčknutí modrého 
 knobu kdykoliv během hry vrátí hráče zpět do hlavního menu.

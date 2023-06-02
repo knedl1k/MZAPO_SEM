@@ -174,6 +174,9 @@ GetResult rotateRight2(int(*matrix)[4], int pos[2]){
   GetResult result;
   int(*rotatedShape)[4] = malloc(4 * sizeof(*rotatedShape));
 
+  result.posX = pos[0];
+  result.posY = pos[1];
+
   // Perform right rotation
   for (int i = 0; i < 4; ++i) {
     for (int j = 0; j < 4; ++j) {
@@ -188,8 +191,10 @@ GetResult rotateRight2(int(*matrix)[4], int pos[2]){
   free(drawShapeResult);
 
   // Set values in the result struct
+  /*
   result.posX = pos[0];
   result.posY = pos[1];
+  */
   memcpy(result.shape, rotatedShape, 4 * 4 * sizeof(int));
 
   free(rotatedShape);

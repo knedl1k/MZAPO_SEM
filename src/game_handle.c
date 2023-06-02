@@ -32,9 +32,9 @@ void gameReaction(void){
 
     rgb1(PRP);
     rgb2(BLCK);
+    
+    sleep(3);
     (i%2)? LEDStrip(0xFF00FF00) : LEDStrip(0x00FF00FF);
-    sleep(0);
-
     rgb2(GRN);
     rgb1(BLCK);
   }
@@ -46,13 +46,13 @@ void gameReaction(void){
   int knobRightState = 1; 
   int shape[4][4] = {{0, 0, 0, 0}, {0, 0, 0, 0}, {1, 0, 0, 0}, {1, 1, 1, 0}};
   int posX = 100; 
-  int posY = 100; 
+  int posY = 60; 
   int i = 0; 
   int* update = malloc(2 * sizeof(int)); 
   update[0] = posX; 
   update[1] = posY;  
 
-  while ( i < 5){
+  while ( i < 3){
     lcdReset(WHT);
     GetResult result = drawShapeBasedOnKnobs(shape, &posX, &posY, knobLeftState, knobRightState);
     
@@ -62,13 +62,13 @@ void gameReaction(void){
     memcpy(shape, result.shape, 4*4*sizeof(int));
     i+=1;
     
-    sleep(4);
+    sleep(3);
     (i%2)? LEDStrip(0x0F0F0F0F) : LEDStrip(0xF0F0F0F0);
   }
 
   lcdReset(BLCK);
 
-  printString("To leave press blue knob.",30,150,WHT,2);
+  printString("Press blue knob to leave.",30,150,WHT,2);
 
   while(! quit){
     knobs=updateKnobValues();

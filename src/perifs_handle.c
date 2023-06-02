@@ -22,6 +22,7 @@ union rgb BLU={.r=0, .g=0, .b=255};
 void initMemory(void){
   parlcd_base=map_phys_address(PARLCD_REG_BASE_PHYS,PARLCD_REG_SIZE,0); //0=nechcem to cashovat  
   assert(parlcd_base !=NULL);
+  //parlcd_hx8357_init(parlcd_base); //!
 
   spiled_base=map_phys_address(SPILED_REG_BASE_PHYS, SPILED_REG_SIZE, 0);
   assert(spiled_base!=NULL);
@@ -35,7 +36,6 @@ void initMemory(void){
 
 /*initializes/resets the LCD*/
 void lcdReset(union rgb color){
-  //parlcd_hx8357_init(parlcd_base); //!
   int background_color=color.d;
   for(unsigned short i=0;i<LCD_HEIGHT;++i)
     for(unsigned short j=0;j<LCD_WIDTH;++j)
@@ -75,16 +75,16 @@ static uint32_t knobsVal(void){
 void knobInit(void){
   prev_rotate=0x0;
   struct rotation_t knobs;//!
-  /*
+  
   do{  //flush the wrong values
     //sleep(1);
     knobs=updateKnobValues();
     printString("Loading! Please wait.",80,120,BLCK,scaling);
     printString("If it takes longer than 10s",20,220,BLCK,scaling);
-    printString("move with the red knob.",20,260,BLCK,scaling);
+    printString("move with the knobs.",20,260,BLCK,scaling);
     printf("r %d g %d b %d\n",knobs.r_knob_data,knobs.g_knob_data,knobs.b_knob_data);
   }while(knobs.r_knob_data!=0 || knobs.g_knob_data!=0 || knobs.b_knob_data!=0);
-  */
+  
   lcdReset(WHT);
 }
 
